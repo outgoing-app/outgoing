@@ -6,6 +6,7 @@ import image from './assets/background.png';
 import {PublicSans_700Bold,PublicSans_400Regular, useFonts} from "@expo-google-fonts/public-sans";
 import GroupsScreen from './screens/GroupsScreen';
 import NewGroup from './screens/NewGroup';
+import IndividualGroup from './screens/IndividualGroup';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -40,6 +41,11 @@ const HomeScreen = () => {
         navigation.navigate('Create New Group');
     };
 
+    const handleIndividualGroup = () => {
+        navigation.navigate('Individual Group');
+    };
+
+
 
     return (
         <View style={styles.container}>
@@ -49,6 +55,9 @@ const HomeScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleNewGroup}>
                     <Text style={styles.buttonText}>Create New Group</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleIndividualGroup}>
+                    <Text style={styles.buttonText}>Individus</Text>
                 </TouchableOpacity>
 
             </ImageBackground>
