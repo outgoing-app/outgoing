@@ -109,13 +109,6 @@ const App = () => {
             <Tab.Screen name="Profile" component={HomeScreen}/>
           </Tab.Navigator>
       </NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Groups" component={GroupsScreen} />
-                <Stack.Screen name="Create New Group" component={NewGroup} />
-
-            </Stack.Navigator>
-        </NavigationContainer>
     );
 };
 
