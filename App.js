@@ -5,6 +5,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import image from './assets/background.png';
 import {PublicSans_700Bold,PublicSans_400Regular, useFonts} from "@expo-google-fonts/public-sans";
 import GroupsScreen from './screens/GroupsScreen';
+import NewGroup from './screens/NewGroup';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -35,12 +36,21 @@ const HomeScreen = () => {
         navigation.navigate('Groups');
     };
 
+    const handleNewGroup = () => {
+        navigation.navigate('Create New Group');
+    };
+
+
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <TouchableOpacity onPress={handleGroupsPress}>
                     <Text style={styles.buttonText}>Groups</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={handleNewGroup}>
+                    <Text style={styles.buttonText}>Create New Group</Text>
+                </TouchableOpacity>
+
             </ImageBackground>
         </View>
     );
@@ -54,6 +64,8 @@ const App = () => {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Groups" component={GroupsScreen} />
+                <Stack.Screen name="Create New Group" component={NewGroup} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
