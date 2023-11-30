@@ -5,6 +5,8 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import image from './assets/background.png';
 import {PublicSans_700Bold,PublicSans_400Regular, useFonts} from "@expo-google-fonts/public-sans";
 import GroupsScreen from './screens/GroupsScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import NewGroup from './screens/NewGroup';
 
 const HomeScreen = () => {
@@ -56,18 +58,57 @@ const HomeScreen = () => {
     );
 };
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Groups" component={GroupsScreen} />
-                <Stack.Screen name="Create New Group" component={NewGroup} />
-
-            </Stack.Navigator>
-        </NavigationContainer>
+          <Tab.Navigator
+                      screenOptions={({ route }) => ({
+                        tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+                        if(route.name=='Home'){
+                          iconName = focused? 'home' : 'home-outline';
+                        }else if(route.name=='Groups'){
+                          iconName = focused? 'clipboard' : 'clipboard-outline';
+                        }else if(route.name==' '){
+                          iconName = focused? 'add-circle' : 'add-circle';
+                          return <Ionicons name={iconName} 
+                          size={75} 
+                          color={'#FF7880'}
+                          style={{
+                            bottom: 5,
+                            height: 100,
+                            borderRadius: 68
+                          }}/>;
+                        }else if(route.name=='Events'){
+                          iconName = focused? 'people' : 'people-outline';
+                        }else if(route.name=='Profile'){
+                          iconName = focused? 'person-circle' : 'person-circle-outline';
+                        }
+                        return <Ionicons name={iconName} size={size} color={color}  />;
+                        },
+                        tabBarActiveTintColor: '#FF7880',
+                        tabBarInactiveTintColor: '#8B8B8B',
+                        tabBarLabelStyle: { textAlign: 'center' },
+                        tabBarIndicatorStyle: {
+                        borderBottomColor: '#C2D5A8',
+                        borderBottomWidth: 2,
+                        },
+        
+                        tabBarLabelStyle: {
+                        textTransform: 'none',
+                        },
+            })}>
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Groups" component={GroupsScreen} />
+            <Tab.Screen name=" " 
+            component={HomeScreen}
+            />
+            <Tab.Screen name="Events" component={HomeScreen}/>
+            <Tab.Screen name="Profile" component={HomeScreen}/>
+          </Tab.Navigator>
+      </NavigationContainer>
     );
 };
 
