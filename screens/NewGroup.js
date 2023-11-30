@@ -6,7 +6,6 @@ import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-googl
 
 const NewGroup = () => {
     const navigation = useNavigation();
-
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
