@@ -39,7 +39,7 @@ const HomeScreen = () => {
     };
 
     const handleNewGroup = () => {
-        navigation.navigate('Create New Group');
+        navigation.replace('Create New Group');
     };
 
 
@@ -103,7 +103,7 @@ const App = () => {
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Groups" component={GroupsScreen} />
             <Tab.Screen name=" " 
-            component={HomeScreen}
+            component={NewGroup}
             />
             <Tab.Screen name="Events" component={HomeScreen}/>
             <Tab.Screen name="Profile" component={HomeScreen}/>
