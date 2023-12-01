@@ -57,7 +57,7 @@ const HomeScreen = () => {
                     <Text style={styles.buttonText}>Create New Group</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleIndividualGroup}>
-                    <Text style={styles.buttonText}>Individus</Text>
+                    <Text style={styles.buttonText}>Individual Group</Text>
                 </TouchableOpacity>
 
             </ImageBackground>
@@ -74,6 +74,7 @@ const App = () => {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Groups" component={GroupsScreen} />
                 <Stack.Screen name="Create New Group" component={NewGroup} />
+                <Stack.Screen name="Individual Group" component={IndividualGroup} />
 
             </Stack.Navigator>
         </NavigationContainer>
