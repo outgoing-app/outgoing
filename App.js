@@ -16,8 +16,7 @@ const HomeScreen = () => {
             PublicSans_700Bold,
             PublicSans_400Regular,
         });
-
-
+        
         const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -35,25 +34,10 @@ const HomeScreen = () => {
         },
     });
 
-    const handleGroupsPress = () => {
-        navigation.navigate('Groups');
-    };
-
-    const handleNewGroup = () => {
-        navigation.navigate('Create New Group');
-    };
-
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                <TouchableOpacity onPress={handleGroupsPress}>
-                    <Text style={styles.buttonText}>Groups</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNewGroup}>
-                    <Text style={styles.buttonText}>Create New Group</Text>
-                </TouchableOpacity>
-
             </ImageBackground>
         </View>
     );
