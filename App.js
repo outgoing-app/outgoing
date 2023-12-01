@@ -8,6 +8,7 @@ import GroupsScreen from './screens/GroupsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NewGroup from './screens/NewGroup';
+import CreateEvent from './screens/CreateEvent';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
@@ -103,7 +104,7 @@ const App = () => {
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Groups" component={GroupsScreen} />
             <Tab.Screen name=" " 
-            component={HomeScreen}
+            component={CreateEvent}
             />
             <Tab.Screen name="Events" component={HomeScreen}/>
             <Tab.Screen name="Profile" component={HomeScreen}/>
