@@ -1,10 +1,20 @@
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity } from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PendingEvent from './PendingEvent'
 
 const PendingEventsScreen = ({ route }) => {
+    const [showSingleEvent, setShowSingleEvent] = useState(false);
+    const [eventId, setEventId] = useState(null);
+    const [eventType, setEventType] = useState(null)
+
+    useEffect(() => {
+        setShowSingleEvent(false)
+        setEventId(null)
+    }, [])
+
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
@@ -93,6 +103,33 @@ const PendingEventsScreen = ({ route }) => {
         }
     });
 
+    const handleSingleEvent = (event) => {
+        setShowSingleEvent(!showSingleEvent)
+        setEventId(event.id)
+        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
+            setEventType('red')
+        } else if (event.status != 'Tentatively') {
+            setEventType('green')
+        } else {
+            setEventType('yellow')
+        }
+    };
+
+    if (showSingleEvent && eventType == 'yellow') {
+        const events = route.pendingEvents.filter(item => {
+            if (item.id == eventId) {
+                return item
+            }
+        })
+        return (
+            <View style={styles.container}>
+                <ImageBackground source={image} style={styles.image}>
+                    <PendingEvent event={events[0]} />
+                </ImageBackground>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
@@ -110,41 +147,43 @@ const PendingEventsScreen = ({ route }) => {
                             waitingText += ' & ' + additionalUsers + ' others'
                         }
                         return (
-                            <View style={styles.outerContainer}>
-                                <View style={styles.detailsContainer}>
-                                    <Text style={styles.subText}>{event.title}</Text>
-                                    <View style={styles.statusCircle}>
-                                        <Ionicons name='ellipse' size={10} color={statusColor} />
+                            <TouchableOpacity onPress={() => handleSingleEvent(event)}>
+                                <View style={styles.outerContainer}>
+                                    <View style={styles.detailsContainer}>
+                                        <Text style={styles.subText}>{event.title}</Text>
+                                        <View style={styles.statusCircle}>
+                                            <Ionicons name='ellipse' size={10} color={statusColor} />
+                                        </View>
+                                        <View style={styles.container}>
+                                            <Text style={styles.statusText}>{event.status}</Text>
+                                        </View>
                                     </View>
-                                    <View style={styles.container}>
-                                        <Text style={styles.statusText}>{event.status}</Text>
+                                    <View style={styles.detailsContainer}>
+                                        <Text style={styles.detailsLabel}>Time</Text>
+                                        <Text style={styles.detailsText}>{event.time}</Text>
+                                    </View>
+                                    <View style={styles.detailsContainer}>
+                                        <View style={styles.detailsLabel}>
+                                            <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                        </View>
+                                        <Text style={styles.detailsText}>
+                                            {event.location}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.detailsContainer}>
+                                        <View style={styles.detailsLabel}>
+                                            <Ionicons name='time-outline' size={20} color='#FF7880' />
+                                        </View>
+                                        <Text style={styles.detailsText2}>{waitingText}</Text>
+                                        <View style={styles.container}>
+                                            {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
+                                                <Pressable style={styles.remindButton} onPress={() => { }}>
+                                                    <Text style={styles.remindText}>Remind</Text>
+                                                </Pressable>}
+                                        </View>
                                     </View>
                                 </View>
-                                <View style={styles.detailsContainer}>
-                                    <Text style={styles.detailsLabel}>Time</Text>
-                                    <Text style={styles.detailsText}>{event.time}</Text>
-                                </View>
-                                <View style={styles.detailsContainer}>
-                                    <View style={styles.detailsLabel}>
-                                        <Ionicons name='location-outline' size={20} color='#FF7880' />
-                                    </View>
-                                    <Text style={styles.detailsText}>
-                                        {event.location}
-                                    </Text>
-                                </View>
-                                <View style={styles.detailsContainer}>
-                                    <View style={styles.detailsLabel}>
-                                        <Ionicons name='time-outline' size={20} color='#FF7880' />
-                                    </View>
-                                    <Text style={styles.detailsText2}>{waitingText}</Text>
-                                    <View style={styles.container}>
-                                        {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
-                                            <Pressable style={styles.remindButton} onPress={() => { }}>
-                                                <Text style={styles.remindText}>Remind</Text>
-                                            </Pressable>}
-                                    </View>
-                                </View>
-                            </View>
+                            </TouchableOpacity>
                         )
                     })}
                 </View>
