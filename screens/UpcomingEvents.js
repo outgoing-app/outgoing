@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, useWindowDimensions } from 'react-native';
-import Header from '../components/Header';
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar, TextView } from 'react-native-tab-view';
 import PendingEventsScreen from './PendingEvents';
 import ConfirmedEventsScreen from './ConfirmedEvents';
 
@@ -93,14 +92,36 @@ const UpcomingEventsScreen = () => {
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'pending', title: 'Pending', pendingEvents: dummyPendingEvents },
-        { key: 'confirmed', title: 'Confirmed', confirmedEvents: dummyConfirmedEvents },
+        { key: 'pending', title: '  Pending  ', pendingEvents: dummyPendingEvents },
+        { key: 'confirmed', title: '  Confirmed  ', confirmedEvents: dummyConfirmedEvents },
     ]);
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <TabView
+                    renderTabBar={props =>
+                        <TabBar
+                            {...props}
+                            indicatorStyle={
+                                {
+                                    backgroundColor: '#FC6E77',
+                                    height: 5,
+                                    bottom: -2,
+                                }
+                            }
+                            style={{ backgroundColor: 'white' }}
+                            tabStyle={{ backgroundColor: 'white' }}
+                            renderLabel={({ route, focused, color }) => (
+                                <Text style={{
+                                    color: focused ? '#FC6E77' : '#6C7072',
+                                    fontWeight: focused ? 'bold' : 'normal'
+                                }}>
+                                    {route.title}
+                                </Text>
+                            )}
+                        />
+                    }
                     navigationState={{ index, routes }}
                     renderScene={renderScene}
                     onIndexChange={setIndex}

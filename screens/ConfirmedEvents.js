@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import image from '../assets/background.png';
-import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import UserIcon from '../components/UserIcon';
 
 const ConfirmedEventsScreen = ({ route }) => {
     const [fontsLoaded] = useFonts({
