@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
-import SingleEvent from '../components/SingleEvent'
 
 
 const PendingEventsScreen = ({ route }) => {

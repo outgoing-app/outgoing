@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, ImageBackground, TouchableOpacity } 
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
+import CreateButton from '../components/CreateButton'
 
 const NewGroup = () => {
     const navigation = useNavigation();
@@ -72,21 +73,6 @@ const NewGroup = () => {
             paddingHorizontal: 10,
             marginTop: 4,
         },
-        createGroupButton: {
-            width: 282,
-            height: 56,
-            backgroundColor: 'rgba(255, 0, 0, 0.5)',
-            borderRadius: 12,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20,
-        },
-        createGroupButtonText: {
-            fontFamily: 'Public Sans',
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: 'white',
-        },
     });
 
     const handleCreateGroup = () => {
@@ -121,7 +107,7 @@ const NewGroup = () => {
                             style={styles.createGroupButton}
                             onPress={handleCreateGroup}
                         >
-                            <Text style={styles.createGroupButtonText}>Create Group</Text>
+                            <CreateButton buttonText="Create Group" onPress={handleCreateGroup}  />
                         </TouchableOpacity>
 
                     </View>

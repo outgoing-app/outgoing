@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NewGroup from './screens/NewGroup';
 import UpcomingEventsScreen from './screens/UpcomingEvents';
+import CreateEvent from './screens/CreateEvent';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -16,7 +17,6 @@ const HomeScreen = () => {
     PublicSans_700Bold,
     PublicSans_400Regular,
   });
-
 
   const styles = StyleSheet.create({
     container: {
@@ -104,7 +104,7 @@ const App = () => {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Groups" component={GroupsScreen} />
         <Tab.Screen name=" "
-          component={HomeScreen}
+          component={CreateEvent}
         />
         <Tab.Screen name="Events" component={UpcomingEventsScreen} />
         <Tab.Screen name="Profile" component={HomeScreen} />
