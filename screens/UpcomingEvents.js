@@ -13,6 +13,8 @@ const dummyPendingEvents = [
         status: 'Tentatively',
         title: 'Ktown Karaoke',
         time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
+        start: 'Thu, Nov 16, 11:00 AM',
+        end: 'Thu, Nov 16, 12:00 PM',
         location: 'Gagopa Karaoke',
         confirmedUsers: ['You', 'Jenny', 'Apple'],
         pendingUsers: ['Grace']
@@ -21,7 +23,9 @@ const dummyPendingEvents = [
         id: '2',
         status: 'Tentatively',
         title: 'Dinner Cruise',
-        time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
+        time: 'Thu, Nov 16, 8:00 PM - 9:30 PM',
+        start: 'Fri, Nov 25, 8:00 PM',
+        end: 'Fri, Nov 25, 9:30 PM',
         location: 'Sunset Cruise',
         confirmedUsers: ['Abby', 'Jenny', 'Apple'],
         pendingUsers: ['You']
@@ -31,6 +35,8 @@ const dummyPendingEvents = [
         status: 'Scheduled',
         title: 'Pottery Lesson',
         time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
+        start: 'Thu, Nov 16, 11:00 AM',
+        end: 'Thu, Nov 16, 12:00 PM',
         location: 'Studio',
         confirmedUsers: ['Abby', 'Jenny', 'You'],
         pendingUsers: ['Abby', 'Wendy', 'Liana', 'Kaylee']
