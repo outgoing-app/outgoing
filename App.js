@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import NewGroup from './screens/NewGroup';
 import UpcomingEventsScreen from './screens/UpcomingEvents';
 import CreateEvent from './screens/CreateEvent';
+import PendingPoll from './screens/PendingPoll';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -104,7 +105,7 @@ const App = () => {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Groups" component={GroupsScreen} />
         <Tab.Screen name=" "
-          component={CreateEvent}
+          component={PendingPoll}
         />
         <Tab.Screen name="Events" component={UpcomingEventsScreen} />
         <Tab.Screen name="Profile" component={HomeScreen} />
