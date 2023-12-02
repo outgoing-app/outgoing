@@ -8,7 +8,7 @@ import BackButton from '../components/BackButton';
 import UserIcon from '../components/UserIcon';
 import GroupIcon from '../components/GroupIcon';
 import { CheckBox } from '@rneui/themed';
-import Header from '../components/Header';
+import CreateButton from '../components/CreateButton';
 
 const CreateEventSeparately = () => {
     const navigation = useNavigation();
@@ -27,7 +27,7 @@ const CreateEventSeparately = () => {
         },
         outerContainer: {
           flexDirection: 'column',
-          height: 580,
+          height: 610,
           width: 350,
           alignSelf: 'center',
           padding: 20,
@@ -70,6 +70,7 @@ const CreateEventSeparately = () => {
     });
 
     const [selectedIndex, setIndex] = React.useState(0);
+    const handleCreateEvent = console.log("Event created!");
 
     return (
         <View style={styles.container}>
@@ -88,13 +89,13 @@ const CreateEventSeparately = () => {
                     />
                     <View style={styles.innerContainer}>
                       <Text style={styles.subText}>Organizer</Text>
-                      <UserIcon initials='AS'/>
+                      <UserIcon initials='AS' size={35}/>
                     </View>
                     <View style={styles.innerContainer}>
                       <Text style={styles.subText}>Invitees</Text>
                       <View style={{flexDirection: 'row'}}>
                         <GroupIcon groupName='Suitemates 💌'/>
-                        <UserIcon initials='AL'/>
+                        <UserIcon initials='AL' size={35}/>
                       </View>
                     </View>
                     <View style={styles.innerContainer}>
@@ -158,6 +159,7 @@ const CreateEventSeparately = () => {
                           </View> 
                         </View>
                       </View>
+                      <CreateButton buttonText="Create Event" onPress={handleCreateEvent}  />
                   </View>
             </ImageBackground>
         </View>

@@ -15,7 +15,7 @@ const CreateButton = ({buttonText, onPress }) => {
 const styles = StyleSheet.create({
     createButton: {
         width: 282,
-        height: 56,
+        height: 50,
         backgroundColor: 'rgba(255, 0, 0, 0.5)',
         borderRadius: 12,
         justifyContent: 'center',

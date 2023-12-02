@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Button } from 'react-native';
 
-const UserIcon = ({ initials }) => {
+const UserIcon = ({ initials, size }) => {
     const styles = StyleSheet.create({
         iconContainer: {
             marginVertical: 10,
             marginRight: 15,
-            width: 35,
-            height: 35,
-            borderRadius: 35,
+            width: size,
+            height: size,
+            borderRadius: size,
             backgroundColor: '#FF7880',
             justifyContent: 'center',
         },
