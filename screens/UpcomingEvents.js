@@ -12,21 +12,28 @@ const dummyPendingEvents = [
         id: '1',
         status: 'tentatively',
         title: 'Ktown Karaoke',
-        startDatetime: new Date("November 16, 2023 11:00:00"),
-        endDatetime: new Date("November 16, 2023 12:00:00"),
+        time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
         location: 'Gagopa Karaoke',
-        confirmedUsers: ['Lily', 'Jenny', 'Apple'],
+        confirmedUsers: ['You', 'Jenny', 'Apple'],
         pendingUsers: ['Grace']
     },
     {
         id: '2',
         status: 'tentatively',
         title: 'Dinner Cruise',
-        startDatetime: new Date("November 16, 2023 11:00:00"),
-        endDatetime: new Date("November 16, 2023 12:00:00"),
+        time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
         location: 'Sunset Cruise',
-        confirmedUsers: ['Lily', 'Jenny', 'Apple'],
-        pendingUsers: ['Lily']
+        confirmedUsers: ['Abby', 'Jenny', 'Apple'],
+        pendingUsers: ['You']
+    },
+    {
+        id: '3',
+        status: 'scheduled',
+        title: 'Pottery Lesson',
+        time: 'Thu, Nov 16, 11:00 AM - 12:00 PM',
+        location: 'Studio',
+        confirmedUsers: ['Abby', 'Jenny', 'You'],
+        pendingUsers: ['Abby', 'Wendy', 'Liana', 'Kaylee']
     }
 ]
 
@@ -85,14 +92,6 @@ const UpcomingEventsScreen = () => {
                 />
             </ImageBackground>
         </View >
-        /*
-        <View style={styles.container}>
-            <ImageBackground source={image} style={styles.image}>
-                <View style={styles.contentContainer}>
-                    <Text style={styles.text}>Upcoming Events</Text>
-                </View>
-            </ImageBackground>
-        </View> */
     );
 };
 
