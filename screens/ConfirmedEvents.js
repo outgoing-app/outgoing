@@ -4,8 +4,9 @@ import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import UserIcon from '../components/UserIcon';
 
-const PendingEventsScreen = ({ route }) => {
+const ConfirmedEventsScreen = ({ route }) => {
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
@@ -91,32 +92,32 @@ const PendingEventsScreen = ({ route }) => {
         statusCircle: {
             marginRight: 'auto',
             marginTop: 4
-        }
+        },
+        iconContainer: {
+            marginVertical: 3,
+            width: 25,
+            height: 25,
+            borderRadius: 35,
+            backgroundColor: '#FF7880',
+            justifyContent: 'center',
+        },
+        iconText: {
+            color: 'white',
+            fontSize: 10,
+            fontWeight: 'bold',
+            textAlign: 'center',
+        },
     });
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.contentContainer}>
-                    {route.pendingEvents.map(event => {
-                        let statusColor = '#FFBE5C'  // tentatively, only waiting on you
-                        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
-                            statusColor = '#EA5C1F'
-                        } else if (event.status != 'Tentatively') {
-                            statusColor = '#B6D639'
-                        }
-                        let waitingText = 'Waiting on ' + event.pendingUsers[0]
-                        const additionalUsers = event.pendingUsers.length - 1
-                        if (additionalUsers > 0) {
-                            waitingText += ' & ' + additionalUsers + ' others'
-                        }
+                    {route.confirmedEvents.map(event => {
                         return (
                             <View style={styles.outerContainer}>
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.subText}>{event.title}</Text>
-                                    <View style={styles.statusCircle}>
-                                        <Ionicons name='ellipse' size={10} color={statusColor} />
-                                    </View>
                                     <View style={styles.container}>
                                         <Text style={styles.statusText}>{event.status}</Text>
                                     </View>
@@ -133,16 +134,19 @@ const PendingEventsScreen = ({ route }) => {
                                         {event.location}
                                     </Text>
                                 </View>
-                                <View style={styles.detailsContainer}>
-                                    <View style={styles.detailsLabel}>
-                                        <Ionicons name='time-outline' size={20} color='#FF7880' />
-                                    </View>
-                                    <Text style={styles.detailsText2}>{waitingText}</Text>
-                                    <View style={styles.container}>
-                                        <Pressable style={styles.remindButton} onPress={() => { }}>
-                                            <Text style={styles.remindText}>Remind</Text>
-                                        </Pressable>
-                                    </View>
+                                <View style={[styles.detailsContainer, { margin: 0 }]}>
+                                    {event.confirmedUsers.slice(0, 4).map((initials) => {
+                                        return (
+                                            <View style={styles.iconContainer}>
+                                                <Text style={styles.iconText}>{initials}</Text>
+                                            </View>
+                                        )
+                                    })}
+                                    {event.confirmedUsers.length > 4 && (
+                                        <View style={styles.iconContainer}>
+                                            <Text style={styles.iconText}>+{event.confirmedUsers.length - 4}</Text>
+                                        </View>
+                                    )}
                                 </View>
                             </View>
                         )
@@ -153,4 +157,4 @@ const PendingEventsScreen = ({ route }) => {
     );
 };
 
-export default PendingEventsScreen;
+export default ConfirmedEventsScreen;
