@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ImageBackground, ScrollView, Text } from 'react-native';
 import Header from '../components/Header'; 
 import NavBar from '../components/NavBar'; 
+import calendarImage from '../assets/calendar.png';
 
 const HomeScreen = () => {
     const styles = StyleSheet.create({
@@ -56,17 +57,16 @@ const HomeScreen = () => {
                         <View style={styles.tab}><Text style={styles.tabText}>Weekly</Text></View>
                         <View style={styles.tab}><Text style={styles.tabText}>Daily</Text></View>
                     </View>
-                    {/* placeholder for event date */}
+                    <Image source={calendarImage} style={{ width: '100%', height: 'auto' }} />
                     <Text style={styles.dateText}>November 2023</Text>
-                    {/* placeholder for event */}
                     <View style={styles.eventPlaceholder}>
                         <Text style={styles.eventText}>Lunch at Fumo 12PM - 2PM</Text>
                     </View>
-                    {/* placeholder for event */}
                     <View style={styles.eventPlaceholder}>
                         <Text style={styles.eventText}>Ktown Karaoke 11PM - 1AM</Text>
                     </View>
                 </ScrollView>
+                        
                 <NavBar />
             </ImageBackground>
         </View>
