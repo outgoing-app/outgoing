@@ -11,54 +11,8 @@ import NewGroup from './screens/NewGroup';
 import UpcomingEventsScreen from './screens/UpcomingEvents';
 import CreateEvent from './screens/CreateEvent';
 import PendingPoll from './screens/PendingPoll';
+import HomeScreen from './screens/HomeScreen';
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
-  const [fontsLoaded] = useFonts({
-    PublicSans_700Bold,
-    PublicSans_400Regular,
-  });
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    image: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    buttonText: {
-      color: 'white',
-      fontFamily: 'Public Sans',
-      fontSize: 24,
-      textAlign: 'center',
-      marginVertical: 20,
-    },
-  });
-
-  const handleGroupsPress = () => {
-    navigation.navigate('Groups');
-  };
-
-  const handleNewGroup = () => {
-    navigation.navigate('Create New Group');
-  };
-
-
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-        <TouchableOpacity onPress={handleGroupsPress}>
-          <Text style={styles.buttonText}>Groups</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNewGroup}>
-          <Text style={styles.buttonText}>Create New Group</Text>
-        </TouchableOpacity>
-
-      </ImageBackground>
-    </View>
-  );
-};
 
 const Tab = createBottomTabNavigator();
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native';
-import image from '../assets/screen-background.png';
+import image from '../assets/background.png';
 import { useFonts, PublicSans_700Bold, PublicSans_400Regular } from "@expo-google-fonts/public-sans";
-import CalendarComponent from '../components/CalendarComponent'; 
+import CalendarComponent from '../components/Calendar';
 
 const HomeScreen = () => {
     const [fontsLoaded] = useFonts({
