@@ -4,12 +4,16 @@ import image from '../assets/background.png';
 import { useFonts, PublicSans_700Bold, PublicSans_400Regular } from "@expo-google-fonts/public-sans";
 import { Ionicons } from '@expo/vector-icons';
 import CreateButton from '../components/CreateButton'
+import { useNavigation } from '@react-navigation/native';
+import NewGroup from './NewGroup.js'
 
 const GroupsScreen = () => {
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
     });
+
+    const navigation = useNavigation();
 
     const styles = StyleSheet.create({
         container: {
@@ -198,7 +202,10 @@ const GroupsScreen = () => {
 
                 </ScrollView>
                 <View style={styles.addButtonContainer}>
-                    <CreateButton buttonText="Add Group" />
+                    <CreateButton
+                        buttonText="Add Group"
+                        onPress={() => navigation.navigate('NewGroup')}
+                    />
                 </View>
 
             </ImageBackground>
