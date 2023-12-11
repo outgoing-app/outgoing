@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, setState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, useWindowDimensions } from 'react-native';
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
@@ -68,7 +68,17 @@ const renderScene = SceneMap({
 });
 
 
-const UpcomingEventsScreen = () => {
+const UpcomingEventsScreen = (props) => {
+
+    // Retrieve data passed as props from top-level component
+    const [users, setUsers] = useState(props.users)
+    const [events, setEvents] = useState(props.events)
+
+    // [TO BE REMOVED] Check that data are successfully loaded in
+    console.log('current userId: ', props.userId)
+    console.log('users: ', users)
+    console.log('events: ', events)
+
     const navigation = useNavigation();
 
     const [fontsLoaded] = useFonts({
@@ -96,8 +106,8 @@ const UpcomingEventsScreen = () => {
 
     const layout = useWindowDimensions();
 
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
+    const [index, setIndex] = useState(0);
+    const [routes] = useState([
         { key: 'pending', title: '  Pending  ', pendingEvents: dummyPendingEvents },
         { key: 'confirmed', title: '  Confirmed  ', confirmedEvents: dummyConfirmedEvents },
     ]);

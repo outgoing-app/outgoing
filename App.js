@@ -7,7 +7,9 @@ import GroupsScreen from './screens/GroupsScreen';
 import UpcomingEventsScreen from './screens/UpcomingEvents';
 import HomeScreen from './screens/HomeScreen';
 import NewGroup from './screens/NewGroup';
+import { users, events, groups } from './assets/dummyData'
 
+const CURRENT_USER_ID = 1;
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -43,9 +45,13 @@ const App = () => {
                 })}
             >
                 <Tab.Screen name="Home" component={HomeScreen} />
-                <Tab.Screen name="Groups" component={GroupsScreen} />
+                <Tab.Screen
+                    name="Groups"
+                    children={() => <GroupsScreen userId={CURRENT_USER_ID} users={users} groups={groups} />} />
                 <Tab.Screen name=" " component={NewGroup} />
-                <Tab.Screen name="Events" component={UpcomingEventsScreen} />
+                <Tab.Screen
+                    name="Events"
+                    children={() => <UpcomingEventsScreen userId={CURRENT_USER_ID} users={users} events={events} />} />
                 <Tab.Screen name="Profile" component={HomeScreen} />
             </Tab.Navigator>
         </NavigationContainer>
