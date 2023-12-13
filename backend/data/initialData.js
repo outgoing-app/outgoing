@@ -64,7 +64,7 @@ const users = [
 const groups = [
     {
         name: 'Suitemates',
-        member_ids: [1, 6, 7],
+        memberIds: [1, 6, 7],
         members: [
             {
                 userId: 1,
@@ -85,21 +85,15 @@ const groups = [
                 initials: 'GC'
             }
         ],
-        lists: [
-            {
-                name: 'Kossar\'s Bagels'
-            },
-            {
-                name: 'Bronx Zoo'
-            },
-            {
-                name: 'Karaoke'
-            }
+        list: [
+            'Kossar\'s Bagels',
+            'Bronx Zoo',
+            'Karaoke'
         ]
     },
     {
         name: 'UI Design Team 26',
-        member_ids: [1, 2, 3, 4],
+        memberIds: [1, 2, 3, 4],
         members: [
             {
                 userId: 1,
@@ -126,21 +120,15 @@ const groups = [
                 initials: 'TC'
             }
         ],
-        lists: [
-            {
-                name: 'Tiger Sugar boba'
-            },
-            {
-                name: 'Project demo rehearsal'
-            },
-            {
-                name: 'Escape room'
-            }
+        list: [
+            'Tiger Sugar boba',
+            'Project demo rehearsal',
+            'Escape room'
         ]
     },
     {
         name: 'High School Reunion',
-        member_ids: [1, 9, 10, 11],
+        memberIds: [1, 9, 10, 11],
         members: [
             {
                 userId: 1,
@@ -167,16 +155,10 @@ const groups = [
                 initials: 'SA'
             }
         ],
-        lists: [
-            {
-                name: 'Soho Shopping'
-            },
-            {
-                name: 'Dinner at Lower East Side'
-            },
-            {
-                name: 'Visit Rockaway Beach and DUMBO'
-            }
+        list: [
+            'Soho Shopping',
+            'Dinner at Lower East Side',
+            'Visit Rockaway Beach and DUMBO'
         ]
     }
 ]
@@ -185,7 +167,6 @@ const events = [
     {
         pending: [
             {
-                eventId: 1,
                 organizerId: 2,
                 status: 'Tentatively',
                 colorCode: 'red',
@@ -272,7 +253,6 @@ const events = [
                 ]
             },
             {
-                eventId: 2,
                 organizerId: 3,
                 status: 'Tentatively',
                 colorCode: 'yellow',
@@ -341,7 +321,6 @@ const events = [
                 ]
             },
             {
-                eventId: 3,
                 organizerId: 1,
                 status: 'Scheduled',
                 colorCode: 'green',

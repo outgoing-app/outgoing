@@ -1,0 +1,62 @@
+[
+    {
+        "userId": 1,
+        "firstname": "Maya",
+        "lastname": "Sundar",
+        "initials": "MS"
+    },
+    {
+        "userId": 2,
+        "firstname": "Lydia",
+        "lastname": "Ying",
+        "initials": "LY"
+    },
+    {
+        "userId": 3,
+        "firstname": "Rissa",
+        "lastname": "Chua",
+        "initials": "RC"
+    },
+    {
+        "userId": 4,
+        "firstname": "Tattie",
+        "lastname": "Chitrakorn",
+        "initials": "TC"
+    },
+    {
+        "userId": 5,
+        "firstname": "Brian",
+        "lastname": "Smith",
+        "initials": "BS"
+    },
+    {
+        "userId": 6,
+        "firstname": "Alice",
+        "lastname": "Sung",
+        "initials": "AS"
+    },
+    {
+        "userId": 7,
+        "firstname": "Grace",
+        "lastname": "Crawford",
+        "initials": "GC"
+    },
+    {
+        "userId": 9,
+        "firstname": "Nina",
+        "lastname": "Lou",
+        "initials": "NL"
+    },
+    {
+        "userId": 10,
+        "firstname": "Alyssa",
+        "lastname": "Yu",
+        "initials": "AY"
+    },
+    {
+        "userId": 11,
+        "firstname": "Simon",
+        "lastname": "Ash",
+        "initials": "SA"
+    }
+]
