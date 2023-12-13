@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,12 +7,51 @@ import GroupsScreen from './screens/GroupsScreen';
 import UpcomingEventsScreen from './screens/UpcomingEvents';
 import HomeScreen from './screens/HomeScreen';
 import NewGroup from './screens/NewGroup';
-import { users, events, groups } from './assets/dummyData'
+import axios from 'axios'
 
-const CURRENT_USER_ID = 1;
+const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
+const IP_ADDRESS = '192.168.1.158'; // change this to your IP ADDRESS to connect with the server
+
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+    const [users, setUsers] = useState([])
+    const [events, setEvents] = useState([])
+    const [groups, setGroups] = useState([])
+
+    useEffect(() => {
+        async function getAllUsers() {
+            try {
+                const users = await axios.get(`http://${IP_ADDRESS}:3000/users`)
+                console.log('users data: ', users.data)
+                setUsers(users.data)
+            } catch (error) {
+                console.log('errors: ', error)
+            }
+        }
+        async function getAllGroups() {
+            try {
+                const groups = await axios.get(`http://${IP_ADDRESS}:3000/groups`)
+                console.log('groups data: ', groups.data)
+                setGroups(groups.data)
+            } catch (error) {
+                console.log('errors: ', error)
+            }
+        }
+        async function getAllEvents() {
+            try {
+                const events = await axios.get(`http://${IP_ADDRESS}:3000/events`)
+                console.log('events data: ', events.data)
+                setEvents(events.data)
+            } catch (error) {
+                console.log('errors: ', error)
+            }
+        }
+        getAllUsers()
+        getAllGroups()
+        getAllEvents()
+    }, [])
+
     return (
         <NavigationContainer>
             <Tab.Navigator
