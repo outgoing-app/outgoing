@@ -1,0 +1,115 @@
+[
+    {
+        "name": "Suitemates",
+        "memberIds": [
+            1,
+            6,
+            7
+        ],
+        "members": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            },
+            {
+                "userId": 6,
+                "firstname": "Alice",
+                "lastname": "Sung",
+                "initials": "AS"
+            },
+            {
+                "userId": 7,
+                "firstname": "Grace",
+                "lastname": "Crawford",
+                "initials": "GC"
+            }
+        ],
+        "list": [
+            "Kossar's Bagels",
+            "Bronx Zoo",
+            "Karaoke"
+        ]
+    },
+    {
+        "name": "UI Design Team 26",
+        "memberIds": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "members": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            },
+            {
+                "userId": 2,
+                "firstname": "Lydia",
+                "lastname": "Ying",
+                "initials": "LY"
+            },
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            }
+        ],
+        "list": [
+            "Tiger Sugar boba",
+            "Project demo rehearsal",
+            "Escape room"
+        ]
+    },
+    {
+        "name": "High School Reunion",
+        "memberIds": [
+            1,
+            9,
+            10,
+            11
+        ],
+        "members": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            },
+            {
+                "userId": 9,
+                "firstname": "Nina",
+                "lastname": "Lou",
+                "initials": "NL"
+            },
+            {
+                "userId": 10,
+                "firstname": "Alyssa",
+                "lastname": "Yu",
+                "initials": "AY"
+            },
+            {
+                "userId": 11,
+                "firstname": "Simon",
+                "lastname": "Ash",
+                "initials": "SA"
+            }
+        ],
+        "list": [
+            "Soho Shopping",
+            "Dinner at Lower East Side",
+            "Visit Rockaway Beach and DUMBO"
+        ]
+    }
+]
