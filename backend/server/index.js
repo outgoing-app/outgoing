@@ -71,6 +71,36 @@ app.get('/events', async (req, res) => {
     }
 });
 
+// Retrieve all pending events
+app.get('/events/pending', async (req, res) => {
+    console.log('getting all pending events...')
+    try {
+        const response = await db.getPendingEvents()
+        if (response) {
+            return res.send(response)
+        } else {
+            return res.status(500).send({ error: 'Unexpected response' })
+        }
+    } catch (error) {
+        return res.status(500).send({ error: error.message })
+    }
+});
+
+// Retrieve all pending events
+app.get('/events/confirmed', async (req, res) => {
+    console.log('getting all confirmed events...')
+    try {
+        const response = await db.getConfirmedEvents()
+        if (response) {
+            return res.send(response)
+        } else {
+            return res.status(500).send({ error: 'Unexpected response' })
+        }
+    } catch (error) {
+        return res.status(500).send({ error: error.message })
+    }
+});
+
 // Delete an event by event id
 app.delete('/event/:id', async (req, res) => {
     console.log('deleting an event...')
