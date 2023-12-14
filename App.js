@@ -16,8 +16,9 @@ const Tab = createBottomTabNavigator();
 
 const App = () => {
     const [users, setUsers] = useState([])
-    const [events, setEvents] = useState([])
     const [groups, setGroups] = useState([])
+    const [pendingEvents, setPendingEvents] = useState([])
+    const [confirmedEvents, setConfirmedEvents] = useState([])
 
     useEffect(() => {
         async function getAllUsers() {
@@ -38,18 +39,28 @@ const App = () => {
                 console.log('errors: ', error)
             }
         }
-        async function getAllEvents() {
+        async function getPendingEvents() {
             try {
-                const events = await axios.get(`http://${IP_ADDRESS}:3000/events`)
-                console.log('events data: ', events.data)
-                setEvents(events.data)
+                const pendingEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/pending`)
+                console.log('pending events data: ', pendingEvents.data)
+                setPendingEvents(pendingEvents.data)
+            } catch (error) {
+                console.log('errors: ', error)
+            }
+        }
+        async function getConfirmedEvents() {
+            try {
+                const confirmedEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/confirmed`)
+                console.log('confirmed events data: ', confirmedEvents.data)
+                setConfirmedEvents(confirmedEvents.data)
             } catch (error) {
                 console.log('errors: ', error)
             }
         }
         getAllUsers()
         getAllGroups()
-        getAllEvents()
+        getPendingEvents()
+        getConfirmedEvents()
     }, [])
 
     return (
@@ -86,11 +97,22 @@ const App = () => {
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen
                     name="Groups"
-                    children={() => <GroupsScreen userId={CURRENT_USER_ID} users={users} groups={groups} />} />
+                    children={() => <GroupsScreen
+                        userId={CURRENT_USER_ID}
+                        users={users}
+                        groups={groups}
+                    />}
+                />
                 <Tab.Screen name=" " component={NewGroup} />
                 <Tab.Screen
                     name="Events"
-                    children={() => <UpcomingEventsScreen userId={CURRENT_USER_ID} users={users} events={events} />} />
+                    children={() => <UpcomingEventsScreen
+                        userId={CURRENT_USER_ID}
+                        users={users}
+                        pendingEvents={pendingEvents}
+                        confirmedEvents={confirmedEvents}
+                    />}
+                />
                 <Tab.Screen name="Profile" component={HomeScreen} />
             </Tab.Navigator>
         </NavigationContainer>
