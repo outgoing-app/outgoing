@@ -107,6 +107,21 @@ const deleteEvent = async (id) => {
     }
 }
 
+const confirmEvent = async (id) => {
+    try {
+        const filter = { _id: new ObjectId(id) }
+        const update = { pending: false }
+        const confirmedEvent = await Event.findOneAndUpdate(
+            filter,
+            update,
+            { new: true }
+        )
+        return confirmedEvent
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const addGroup = async (group) => {
     const newGroup = new Group({
         name: group.name,
@@ -159,3 +174,4 @@ module.exports.deleteGroup = deleteGroup;
 module.exports.getUsers = getUsers;
 module.exports.getPendingEvents = getPendingEvents;
 module.exports.getConfirmedEvents = getConfirmedEvents;
+module.exports.confirmEvent = confirmEvent;
