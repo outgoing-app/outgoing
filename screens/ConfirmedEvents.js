@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity} fr
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import PendingEvent from "./PendingEvent";
+import ConfirmedEvent from "./ConfirmedEvent";
 
 const ConfirmedEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
@@ -128,7 +128,7 @@ const ConfirmedEventsScreen = ({ route }) => {
         return (
             <View style={styles.container}>
                 <ImageBackground source={image} style={styles.image}>
-                    <PendingEvent event={events[0]} />
+                    <ConfirmedEvent event={events[0]} />
                 </ImageBackground>
             </View>
         );
