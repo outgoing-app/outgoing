@@ -133,10 +133,10 @@ const ConfirmedEventsScreen = ({ route }) => {
                                     </Text>
                                 </View>
                                 <View style={[styles.detailsContainer, { margin: 0 }]}>
-                                    {event.confirmedUsers.slice(0, 4).map((initials) => {
+                                    {event.confirmedUsers.slice(0, 4).map((user) => {
                                         return (
                                             <View style={styles.iconContainer}>
-                                                <Text style={styles.iconText}>{initials}</Text>
+                                                <Text style={styles.iconText}>{user.initials}</Text>
                                             </View>
                                         )
                                     })}
