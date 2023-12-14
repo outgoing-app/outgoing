@@ -106,7 +106,7 @@ const PendingEventsScreen = ({ route }) => {
     const handleSingleEvent = (event) => {
         setShowSingleEvent(!showSingleEvent)
         setEventId(event.id)
-        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
+        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
             setEventType('red')
         } else if (event.status != 'Tentatively') {
             setEventType('green')
@@ -136,7 +136,7 @@ const PendingEventsScreen = ({ route }) => {
                 <View style={styles.contentContainer}>
                     {route.pendingEvents.map(event => {
                         let statusColor = '#FFBE5C'  // tentatively, only waiting on you
-                        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
+                        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
                             statusColor = '#EA5C1F'
                         } else if (event.status != 'Tentatively') {
                             statusColor = '#B6D639'
