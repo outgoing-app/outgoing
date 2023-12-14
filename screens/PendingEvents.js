@@ -115,7 +115,7 @@ const PendingEventsScreen = ({ route }) => {
         }
     };
 
-    if (showSingleEvent && eventType == 'yellow') {
+    if (showSingleEvent && eventType == 'yellow' ) {
         const events = route.pendingEvents.filter(item => {
             if (item.id == eventId) {
                 return item

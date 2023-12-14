@@ -1,15 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity} from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PendingEvent from "./PendingEvent";
 
 const ConfirmedEventsScreen = ({ route }) => {
+    const [showSingleEvent, setShowSingleEvent] = useState(false);
+    const [eventId, setEventId] = useState(null);
+    useEffect(() => {
+        setShowSingleEvent(false)
+        setEventId(null)
+    }, [])
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
     });
-
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -107,52 +113,92 @@ const ConfirmedEventsScreen = ({ route }) => {
         },
     });
 
+    const handleSingleEvent = (event) => {
+        setShowSingleEvent(!showSingleEvent)
+        setEventId(event.id)
+    };
+
+    if (showSingleEvent) {
+        const events = route.confirmedEvents.filter(item => {
+            if (item.id == eventId) {
+                return item;
+            }
+        });
+
+        return (
+            <View style={styles.container}>
+                <ImageBackground source={image} style={styles.image}>
+                    <PendingEvent event={events[0]} />
+                </ImageBackground>
+            </View>
+        );
+    }
+
+
+
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.contentContainer}>
-                    {route.confirmedEvents.map(event => {
+                    {route.confirmedEvents.map((event) => {
+                        let statusColor = '#FFBE5C'; // tentatively, only waiting on you
+                        if (
+                            event.status == 'Tentatively' &&
+                            (event.pendingUsers && event.pendingUsers.length > 1 && !event.pendingUsers.includes('You'))
+                        ) {
+                            statusColor = '#EA5C1F';
+                        } else if (event.status != 'Tentatively') {
+                            statusColor = '#B6D639';
+                        }
+
+                        let waitingText = 'Waiting on ';
+                        if (event.pendingUsers && event.pendingUsers.length > 0) {
+                            waitingText += event.pendingUsers[0];
+
+                            const additionalUsers = event.pendingUsers.length - 1;
+                            if (additionalUsers > 0) {
+                                waitingText += ' & ' + additionalUsers + ' others';
+                            }
+                        }
+
                         return (
-                            <View style={styles.outerContainer}>
-                                <View style={styles.detailsContainer}>
-                                    <Text style={styles.subText}>{event.title}</Text>
-                                    <View style={styles.container}>
-                                        <Text style={styles.statusText}>{event.status}</Text>
+                            <TouchableOpacity onPress={() => handleSingleEvent(event)}>
+                                <View style={styles.outerContainer}>
+                                    <View style={styles.detailsContainer}>
+                                        <Text style={styles.subText}>{event.title}</Text>
+                                        <View style={styles.container}>
+                                            <Text style={styles.statusText}>{event.status}</Text>
+                                        </View>
                                     </View>
-                                </View>
-                                <View style={styles.detailsContainer}>
-                                    <Text style={styles.detailsLabel}>Time</Text>
-                                    <Text style={styles.detailsText}>{event.time}</Text>
-                                </View>
-                                <View style={styles.detailsContainer}>
-                                    <View style={styles.detailsLabel}>
-                                        <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                    <View style={styles.detailsContainer}>
+                                        <Text style={styles.detailsLabel}>Time</Text>
+                                        <Text style={styles.detailsText}>{event.time}</Text>
                                     </View>
-                                    <Text style={styles.detailsText}>
-                                        {event.location}
-                                    </Text>
-                                </View>
-                                <View style={[styles.detailsContainer, { margin: 0 }]}>
-                                    {event.confirmedUsers.slice(0, 4).map((initials) => {
-                                        return (
+                                    <View style={styles.detailsContainer}>
+                                        <View style={styles.detailsLabel}>
+                                            <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                        </View>
+                                        <Text style={styles.detailsText}>{event.location}</Text>
+                                    </View>
+                                    <View style={[styles.detailsContainer, { margin: 0 }]}>
+                                        {event.confirmedUsers.slice(0, 4).map((initials) => (
                                             <View style={styles.iconContainer}>
                                                 <Text style={styles.iconText}>{initials}</Text>
                                             </View>
-                                        )
-                                    })}
-                                    {event.confirmedUsers.length > 4 && (
-                                        <View style={styles.iconContainer}>
-                                            <Text style={styles.iconText}>+{event.confirmedUsers.length - 4}</Text>
-                                        </View>
-                                    )}
+                                        ))}
+                                        {event.confirmedUsers.length > 4 && (
+                                            <View style={styles.iconContainer}>
+                                                <Text style={styles.iconText}>+{event.confirmedUsers.length - 4}</Text>
+                                            </View>
+                                        )}
+                                    </View>
                                 </View>
-                            </View>
-                        )
+                            </TouchableOpacity>
+                        );
                     })}
                 </View>
             </ImageBackground>
         </View>
     );
 };
-
 export default ConfirmedEventsScreen;
