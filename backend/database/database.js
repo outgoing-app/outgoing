@@ -68,8 +68,31 @@ const addEvent = async (event) => {
 
 const getEvents = async () => {
     try {
-        const events = await Event.find({}, { __v: 0 });
+        const pendingEvents = await Event.find({ pending: true }, { __v: 0 });
+        const confirmedEvents = await Event.find({ pending: false }, { __v: 0 });
+        const events = {
+            pending: pendingEvents,
+            confirmed: confirmedEvents
+        }
         return events
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const getPendingEvents = async () => {
+    try {
+        const pendingEvents = await Event.find({ pending: true }, { __v: 0 });
+        return pendingEvents
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const getConfirmedEvents = async () => {
+    try {
+        const confirmedEvents = await Event.find({ pending: false }, { __v: 0 });
+        return confirmedEvents
     } catch (error) {
         throw new Error(error)
     }
@@ -134,3 +157,5 @@ module.exports.addGroup = addGroup;
 module.exports.getGroups = getGroups;
 module.exports.deleteGroup = deleteGroup;
 module.exports.getUsers = getUsers;
+module.exports.getPendingEvents = getPendingEvents;
+module.exports.getConfirmedEvents = getConfirmedEvents;
