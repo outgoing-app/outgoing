@@ -116,6 +116,21 @@ app.delete('/event/:id', async (req, res) => {
     }
 });
 
+// Confirm an event by event id
+app.post('/event/confirm/:id', async (req, res) => {
+    console.log('confirm an event...')
+    try {
+        const response = await db.confirmEvent(req.params.id)
+        if (response) {
+            return res.send(response)
+        } else {
+            return res.status(500).send({ error: 'Unexpected response' })
+        }
+    } catch (error) {
+        return res.status(500).send({ error: error.message })
+    }
+});
+
 // Add a new group to the database
 app.post('/group', async (req, res) => {
     console.log('adding a group...')
