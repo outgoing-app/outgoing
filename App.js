@@ -13,7 +13,7 @@ import CreateEvent from './screens/CreateEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
 
-const IP_ADDRESS = '192.168.1.158'; // change this to your IP ADDRESS to connect with the server
+const IP_ADDRESS = '10.206.27.172'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 
