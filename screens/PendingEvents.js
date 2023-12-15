@@ -4,6 +4,7 @@ import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PendingEvent from './PendingEvent'
+import VotingPoll from './VotingPoll';
 import { useNavigation } from '@react-navigation/native';
 import moment from "moment/moment";
 
@@ -11,6 +12,12 @@ const PendingEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)
+
+    const [isVotingVisible, setIsVotingVisible] = useState(false);
+    const onVotingClose = () => {
+        setIsVotingVisible(false)
+        console.log("hi")
+    };
     const navigation = useNavigation();
     useEffect(() => {
         setShowSingleEvent(false)
@@ -117,6 +124,7 @@ const PendingEventsScreen = ({ route }) => {
         setEventId(event._id);
         if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
             setEventType('red');
+            setIsVotingVisible(true)
         } else if (event.status !== 'Tentatively') {
             setEventType('green');
         } else {
@@ -156,6 +164,7 @@ const PendingEventsScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
+              <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose}/>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     <View style={styles.contentContainer}>
                         {route.pendingEvents.map(event => {

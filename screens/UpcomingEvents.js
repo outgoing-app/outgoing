@@ -8,15 +8,16 @@ import PendingEventsScreen from './PendingEvents';
 import ConfirmedEventsScreen from './ConfirmedEvents';
 
 const UpcomingEventsScreen = (props) => {
+    console.log(props);
 
     // Retrieve data passed as props from top-level component
     const { userId, users, pendingEvents, confirmedEvents } = props;
 
     // [TO BE REMOVED] Check that data are successfully loaded in
     console.log('current userId: ', props.userId)
-    console.log('users: ', users)
-    console.log('pending events: ', pendingEvents)
-    console.log('confirmed events: ', confirmedEvents)
+    console.log('users: ', props.users)
+    console.log('pending events: ', props.pendingEvents)
+    console.log('confirmed events: ', props.confirmedEvents)
 
     const navigation = useNavigation();
 

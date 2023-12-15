@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native';
 import image from '../assets/background.png';
 import { useFonts, PublicSans_700Bold, PublicSans_400Regular } from "@expo-google-fonts/public-sans";
@@ -37,7 +37,6 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.mainContent}>
-                    <VotingPoll/>
                 </View>
             </ImageBackground>
         </View>
