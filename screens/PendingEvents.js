@@ -154,14 +154,15 @@ const PendingEventsScreen = ({ route, onDeleteEvent, getPendingEvents,confirmEve
         )
     }
     const formatEventTime = (startTimeString, endTimeString) => {
+        const dateFormat = 'MMMM DD';
+        const startDate = moment(startTimeString).format(dateFormat);
+        const endDate = moment(endTimeString).format(dateFormat);
         console.log("Start time:", startTimeString);
         console.log("End time:", endTimeString);
         const formatString = 'mm:ss a';
-
         const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
         const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
-
-        return `${startTime} - ${endTime}`;
+        return `${startDate} at ${startTime}`;
     };
 
 

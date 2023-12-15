@@ -13,7 +13,7 @@ import CreateEvent from './screens/CreateEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
 
-const IP_ADDRESS = '10.206.27.172'; // change this to your IP ADDRESS to connect with the server
+const IP_ADDRESS = '10.207.85.215'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 
@@ -84,7 +84,7 @@ const App = () => {
 
     useEffect(() => {
         getAllUsers()
-        getAllGroups()
+    https://github.com/outgoing-app/outgoing/pull/18/conflict?name=screens%252FPendingEvent.js&ancestor_oid=fb7f1ace50edcb37adae45e73068862c962de934&base_oid=867ec87d1e7d668f405a1fbe1aed84fe825a3d78&head_oid=a1d1935806fe5b1ec413e41145f4b17b82102b56    getAllGroups()
         getPendingEvents()
         getConfirmedEvents()
     }, [])
