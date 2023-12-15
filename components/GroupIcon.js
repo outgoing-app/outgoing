@@ -4,10 +4,10 @@ import { View, Text, StyleSheet, ImageBackground, Button } from 'react-native';
 const GroupIcon = ({ groupName }) => {
     const styles = StyleSheet.create({
         iconContainer: {
-            marginVertical: 10,
-            marginRight: 15,
+            margin: 5,
             height: 35,
-            borderRadius: 15,
+            width: 35,
+            borderRadius: 7,
             backgroundColor: '#FAE0E0',
             justifyContent: 'center',
             paddingHorizontal: 9,

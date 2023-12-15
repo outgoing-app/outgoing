@@ -4,8 +4,7 @@ import { View, Text, StyleSheet, ImageBackground, Button } from 'react-native';
 const UserIcon = ({ initials, size }) => {
     const styles = StyleSheet.create({
         iconContainer: {
-            marginVertical: 10,
-            marginRight: 15,
+            margin: 5,
             width: size,
             height: size,
             borderRadius: size,

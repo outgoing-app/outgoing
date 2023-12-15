@@ -3,6 +3,7 @@ import { View, StyleSheet, ImageBackground } from 'react-native';
 import image from '../assets/background.png';
 import { useFonts, PublicSans_700Bold, PublicSans_400Regular } from "@expo-google-fonts/public-sans";
 import CalendarComponent from '../components/Calendar';
+import VotingPoll from './VotingPoll';
 
 const HomeScreen = () => {
     const [fontsLoaded] = useFonts({
@@ -36,7 +37,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.mainContent}>
-                    <CalendarComponent />
+                    <VotingPoll/>
                 </View>
             </ImageBackground>
         </View>
