@@ -4,11 +4,18 @@ import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PendingEvent from './PendingEvent'
+import VotingPoll from './VotingPoll';
 
 const PendingEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)
+
+    const [isVotingVisible, setIsVotingVisible] = useState(false);
+    const onVotingClose = () => {
+        setIsVotingVisible(false)
+        console.log("hi")
+    };
 
     useEffect(() => {
         setShowSingleEvent(false)
@@ -106,8 +113,9 @@ const PendingEventsScreen = ({ route }) => {
     const handleSingleEvent = (event) => {
         setShowSingleEvent(!showSingleEvent)
         setEventId(event.id)
-        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
+        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
             setEventType('red')
+            setIsVotingVisible(true)
         } else if (event.status != 'Tentatively') {
             setEventType('green')
         } else {
@@ -133,10 +141,11 @@ const PendingEventsScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
+                <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose}/>
                 <View style={styles.contentContainer}>
                     {route.pendingEvents.map(event => {
                         let statusColor = '#FFBE5C'  // tentatively, only waiting on you
-                        if (event.status == 'Tentatively' && (event.pendingUsers.lenth > 1 || !event.pendingUsers.includes('You'))) {
+                        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
                             statusColor = '#EA5C1F'
                         } else if (event.status != 'Tentatively') {
                             statusColor = '#B6D639'

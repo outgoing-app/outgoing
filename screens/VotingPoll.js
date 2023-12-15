@@ -7,7 +7,7 @@ import UserIcon from '../components/UserIcon';
 import CreateButton from '../components/CreateButton';
 import { CheckBox } from '@rneui/themed';
 import Header from '../components/Header';
-import PendingEventsScreen from './PendingEvents';
+import CreateButtonSmall from '../components/CreateButtonSmall';
 
 // dummy variables
 const eventName = "Pottery Lesson"
@@ -31,16 +31,22 @@ const VotingPoll = ({isVisible, onClose}) => {
     const[checkedState, setCheckedState] = useState(
         new Array(times.length).fill(false)
     );
+    // disable vote button after voting
+    const[disabled, setDisabled] = useState(false);
+    const[voted, setVoted] = useState('Vote')
     // updates checked options
     const handleChange = (idx) => {
         const updatedCheckedState = checkedState.map((item, index) =>
             index === idx ? !item : item
         );
         setCheckedState(updatedCheckedState)
+        setButtonColor('grey')
     };
 
     const vote = () => {
         console.log(checkedState)
+        setDisabled(true)
+        setVoted('Voted!')
         // update database with # votes for each option
         
     }
@@ -147,8 +153,9 @@ const VotingPoll = ({isVisible, onClose}) => {
                 textStyle={{fontWeight:'normal', fontSize: 12, color:'8B8B8B'}}
                 />)}
             </View>
-            <View style={{alignItems: 'center'}}>
-                <CreateButton buttonText="Vote" onPress={onClose}/>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <CreateButtonSmall buttonText="Close" onPress={onClose} disabled={false}/>
+                <CreateButtonSmall buttonText={voted} onPress={vote} disabled={disabled}/>
             </View>
         </View>
         </Modal>

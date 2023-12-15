@@ -6,11 +6,6 @@ import CalendarComponent from '../components/Calendar';
 import VotingPoll from './VotingPoll';
 
 const HomeScreen = () => {
-    const [isModalVisible, setIsModalVisible] = useState(true);
-    const onModalClose = () => {
-        setIsModalVisible(false);
-    };
-    
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
@@ -42,7 +37,6 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.mainContent}>
-                    <VotingPoll isVisible={isModalVisible} onClose={onModalClose}/>
                 </View>
             </ImageBackground>
         </View>

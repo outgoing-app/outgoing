@@ -11,8 +11,6 @@ import { CheckBox } from '@rneui/themed'
 import CreateButton from '../components/CreateButton'
 import SelectDropdown from 'react-native-select-dropdown'
 
-/*db = connectDB()
-console.log(db.getEvents())*/
 
 const CreateEvent = (props) => {
   console.log(props.groups)
