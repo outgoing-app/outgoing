@@ -1,3 +1,4 @@
+// react native
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Pressable, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -9,20 +10,19 @@ import GroupIcon from '../components/GroupIcon'
 import { CheckBox } from '@rneui/themed'
 import CreateButton from '../components/CreateButton'
 import SelectDropdown from 'react-native-select-dropdown'
-import DatePicker from 'react-native-date-picker'
-import { useHeaderHeight } from '@react-navigation/elements'
 
-// temp dummy data
-const groupsData = require('../backend/data/groups.json');
-const usersData = require('../backend/data/users.json');
+/*db = connectDB()
+console.log(db.getEvents())*/
 
-const CreateEvent = () => {
+const CreateEvent = (props) => {
+  console.log(props.groups)
+
   const [selectedGroups, setSelectedGroups] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const groupOptions = groupsData.map(item => {
+  const groupOptions = props.groups.map(item => {
     return {name: item.name, type: 'group'}
   });
-  const userOptions = usersData.map(item => {
+  const userOptions = props.users.map(item => {
     return {name: item.firstname+" "+item.lastname, type: 'user'}
   });
   let allOptions = userOptions.concat(groupOptions)

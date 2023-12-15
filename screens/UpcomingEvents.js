@@ -69,6 +69,7 @@ const renderScene = SceneMap({
 
 
 const UpcomingEventsScreen = (props) => {
+    console.log(props);
 
     // Retrieve data passed as props from top-level component
     const [users, setUsers] = useState(props.users)
@@ -77,9 +78,9 @@ const UpcomingEventsScreen = (props) => {
 
     // [TO BE REMOVED] Check that data are successfully loaded in
     console.log('current userId: ', props.userId)
-    console.log('users: ', users)
-    console.log('pending events: ', pendingEvents)
-    console.log('confirmed events: ', confirmedEvents)
+    console.log('users: ', props.users)
+    console.log('pending events: ', props.pendingEvents)
+    console.log('confirmed events: ', props.confirmedEvents)
 
     const navigation = useNavigation();
 
