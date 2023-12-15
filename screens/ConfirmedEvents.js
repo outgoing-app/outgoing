@@ -148,10 +148,9 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
-                <View style={styles.contentContainer}>
-                    {route.confirmedEvents.map(event => {
-                        return (
-                            <View style={styles.outerContainer}>
+                    <View style={styles.contentContainer}>
+                        {route.confirmedEvents.map(event => (
+                            <View style={styles.outerContainer} key={event._id}>
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.subText}>{event.title}</Text>
                                     <View style={styles.container}>
@@ -164,7 +163,6 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
                                         <Text style={styles.detailsText}>
                                             {formatEventTime(event.start, event.end)}
                                         </Text>
-
                                     </Text>
                                 </View>
                                 <View style={styles.detailsContainer}>
@@ -176,37 +174,34 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
                                     </Text>
                                 </View>
                                 <View style={[styles.detailsContainer, { margin: 0 }]}>
-                                    {event.confirmedUsers.slice(0, 4).map((user) => {
-                                        return (
-                                            <View style={styles.iconContainer}>
-                                                <Text style={styles.iconText}>{user.initials}</Text>
-                                            </View>
-                                        )
-                                    })}
+                                    {event.confirmedUsers.slice(0, 4).map((user) => (
+                                        <View style={styles.iconContainer} key={user.id}>
+                                            <Text style={styles.iconText}>{user.initials}</Text>
+                                        </View>
+                                    ))}
                                     {event.confirmedUsers.length > 4 && (
                                         <View style={styles.iconContainer}>
                                             <Text style={styles.iconText}>+{event.confirmedUsers.length - 4}</Text>
                                         </View>
-
                                     )}
                                 </View>
                                 <View style={styles.buttonContainer}>
-                                    <Pressable>
-                                    style={[styles.cancelButton, { backgroundColor: '#FAE0E0' }]}
-                                    onPress={() => handleCancelEvent(event._id)}
+                                    <Pressable
+                                        style={[styles.cancelButton, { backgroundColor: '#FAE0E0' }]}
+                                        onPress={() => handleCancelEvent(event._id)}
+                                    >
                                         <Text style={{ ...styles.cancelText, color: '#FF7880' }}>Cancel</Text>
-
                                     </Pressable>
                                 </View>
                             </View>
-
-                        )
-                    })}
-                </View>
+                        ))}
+                    </View>
                 </ScrollView>
             </ImageBackground>
         </View>
     );
 };
+
+
 
 export default ConfirmedEventsScreen;
