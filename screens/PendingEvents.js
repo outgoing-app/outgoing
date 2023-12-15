@@ -8,7 +8,7 @@ import VotingPoll from './VotingPoll';
 import { useNavigation } from '@react-navigation/native';
 import moment from "moment/moment";
 
-const PendingEventsScreen = ({ route }) => {
+const PendingEventsScreen = ({ route, onDeleteEvent, getPendingEvents }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)

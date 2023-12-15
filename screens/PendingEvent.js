@@ -6,10 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import UserIcon from '../components/UserIcon';
 
-const PendingEvent = (props) => {
+const PendingEvent = ({ event, onDeleteEvent }) => {
     const navigation = useNavigation();
     //const event = route.params.event; // Extracting event from route params
-    const event = props.event
 
     // Function to format event time
     const formatEventTime = (timeString) => {
@@ -94,6 +93,20 @@ const PendingEvent = (props) => {
             letterSpacing: 0.25,
         },
     });
+
+    const handleCancelEvent = async (eventId) => {
+        if (onDeleteEvent) {
+            try {
+                await onDeleteEvent(event._id);
+                console.log('Event deleted successfully!');
+                if (getConfirmedEvents) {
+                    getConfirmedEvents();
+                }
+            } catch (error) {
+                console.error('Error deleting event:', error);
+            }
+        }
+    };
 
     return (
         <View style={styles.container}>

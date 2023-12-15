@@ -136,6 +136,7 @@ const App = () => {
                         confirmedEvents={confirmedEvents}
                         onDeleteEvent={handleDeleteEvent}
                         getConfirmedEvents={getConfirmedEvents}
+                        getPendingEvents={getPendingEvents}
                     />}
                 />
                 <Tab.Screen name="Profile" component={HomeScreen} />
