@@ -131,12 +131,13 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
     const formatEventTime = (startTimeString, endTimeString) => {
         console.log("Start time:", startTimeString);
         console.log("End time:", endTimeString);
-        const formatString = 'mm:ss a';
+        const formatString = 'MM/DD/YY hh:mm a';
 
-        const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
-        const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const startTime = moment(startTimeString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const endTime = moment(endTimeString, 'YYYY-MM-DDTHH:HH:mm:ss.SSSZ').format(formatString);
 
         return `${startTime} - ${endTime}`;
+
     };
 
 
