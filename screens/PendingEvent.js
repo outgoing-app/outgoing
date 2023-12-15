@@ -5,6 +5,7 @@ import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import UserIcon from '../components/UserIcon';
+import moment from "moment/moment";
 
 const PendingEvent = ({ event, onDeleteEvent }) => {
     const [home, setHome] = useState(false)
@@ -13,9 +14,12 @@ const PendingEvent = ({ event, onDeleteEvent }) => {
 
     // Function to format event time
     const formatEventTime = (timeString) => {
-        const time = new Date(timeString);
-        const formattedTime = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-        return formattedTime;
+        console.log("Start time:", timeString);
+        const formatString = 'mm:ss a';
+
+        const time = timeString?.replace(/T\d{2}:/, 'T00:') ? moment(timeString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString) : 'Invalid Time';
+
+        return `${time}`;
     };
 
     const styles = StyleSheet.create({
@@ -76,7 +80,6 @@ const PendingEvent = ({ event, onDeleteEvent }) => {
             width: 25,
             height: 25,
             borderRadius: 35,
-            backgroundColor: '#FF7880',
             justifyContent: 'center',
             alignItems: 'center',
         },
@@ -119,7 +122,7 @@ const PendingEvent = ({ event, onDeleteEvent }) => {
                             style={styles.iconContainer}
                             onPress={() => navigation.goBack()}
                         >
-                            <Ionicons name='close-circle-outline' size={28} color='#FAE0E0' />
+                            <Ionicons name='close-circle-outline' size={28} color='#FFC6CA' />
                         </Pressable>
                     </View>
                     <View
@@ -134,9 +137,10 @@ const PendingEvent = ({ event, onDeleteEvent }) => {
                     />
                     <View style={styles.detailsContainer}>
                         <Text style={styles.subText}>Contributors</Text>
+                        <View style={{flexDirection:'column'}}></View>
                         <View style={{ flexDirection: 'row' }}>
                             {event.confirmedUsers.map((user, index) => (
-                                <UserIcon key={index} initials={user.initials} />
+                                <UserIcon initials={user.initials} size={35}/>
                             ))}
                         </View>
                     </View>
