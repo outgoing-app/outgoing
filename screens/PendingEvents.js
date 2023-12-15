@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, ScrollView } from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -113,7 +113,7 @@ const PendingEventsScreen = ({ route }) => {
 
     const handleSingleEvent = (event) => {
         setShowSingleEvent(!showSingleEvent);
-        setEventId(event.id);
+        setEventId(event._id);
         if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
             setEventType('red');
         } else if (event.status !== 'Tentatively') {
@@ -121,14 +121,14 @@ const PendingEventsScreen = ({ route }) => {
         } else {
             setEventType('yellow');
         }
-        navigation.navigate('PendingEvent', { event });
+        //navigation.navigate('PendingEvent', { event });
     };
 
 
 
-    if (showSingleEvent && eventType == 'yellow') {
+    if (showSingleEvent) {
         const events = route.pendingEvents.filter(item => {
-            if (item.id == eventId) {
+            if (item._id == eventId) {
                 return item
             }
         })

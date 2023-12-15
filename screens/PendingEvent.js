@@ -6,9 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import UserIcon from '../components/UserIcon';
 
-const PendingEvent = ({ route }) => {
+const PendingEvent = (props) => {
     const navigation = useNavigation();
-    const event = route.params.event; // Extracting event from route params
+    //const event = route.params.event; // Extracting event from route params
+    const event = props.event
 
     // Function to format event time
     const formatEventTime = (timeString) => {
@@ -121,7 +122,7 @@ const PendingEvent = ({ route }) => {
                         <Text style={styles.subText}>Contributors</Text>
                         <View style={{ flexDirection: 'row' }}>
                             {event.confirmedUsers.map((user, index) => (
-                                <UserIcon key={index} initials={user.slice(0, 2)} />
+                                <UserIcon key={index} initials={user.initials} />
                             ))}
                         </View>
                     </View>
