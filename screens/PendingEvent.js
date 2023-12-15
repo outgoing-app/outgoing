@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
-import BackButton from '../components/BackButton';
 import UserIcon from '../components/UserIcon';
-import GroupIcon from '../components/GroupIcon';
-import { CheckBox } from '@rneui/themed';
-import Header from '../components/Header';
 
-const PendingEvent = (props) => {
+const PendingEvent = ({ route }) => {
     const navigation = useNavigation();
-    const [fontsLoaded] = useFonts({
-        PublicSans_700Bold,
-        PublicSans_400Regular,
-    });
+    const event = route.params.event; // Extracting event from route params
+
+    // Function to format event time
+    const formatEventTime = (timeString) => {
+        const time = new Date(timeString);
+        const formattedTime = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        return formattedTime;
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -41,14 +41,14 @@ const PendingEvent = (props) => {
             marginVertical: 5,
             marginLeft: 5,
             flexDirection: 'row',
-            gap: 20
+            justifyContent: 'space-between',
+            alignItems: 'center',
         },
         headerText: {
             fontSize: 22,
             color: '#FC6E77',
             textAlign: 'center',
             fontWeight: 'bold',
-            textAlign: 'center',
         },
         subText: {
             fontSize: 16,
@@ -59,6 +59,7 @@ const PendingEvent = (props) => {
         detailsContainer: {
             flexDirection: 'row',
             gap: 20,
+            marginVertical: 10,
         },
         detailsLabel: {
             color: '#8B8B8B',
@@ -76,87 +77,86 @@ const PendingEvent = (props) => {
             borderRadius: 35,
             backgroundColor: '#FF7880',
             justifyContent: 'center',
+            alignItems: 'center',
         },
         confirmButton: {
             borderRadius: 14,
-            color: '#ffffff',
             marginBottom: 20,
             paddingHorizontal: 20,
             paddingVertical: 15,
-            width: 120
+            width: 120,
+            alignItems: 'center',
         },
         confirmText: {
             fontSize: 16,
             fontWeight: 'bold',
             letterSpacing: 0.25,
-            padding: 5,
-            textAlign: 'center'
         },
-        closeCircle: {
-            marginLeft: 'auto',
-            marginTop: 0,
-            marginBottom: 0
-        }
     });
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.outerContainer}>
-                    <View style={[styles.innerContainer, { alignContent: 'space-between' }]}>
-                        <Text style={[styles.headerText]}>{props.event.title}</Text>
-                        <View style={styles.closeCircle}>
+                    <View style={styles.innerContainer}>
+                        <Text style={styles.headerText}>{event.title}</Text>
+                        <Pressable
+                            style={styles.iconContainer}
+                            onPress={() => navigation.goBack()}
+                        >
                             <Ionicons name='close-circle-outline' size={28} color='#FAE0E0' />
-                        </View>
+                        </Pressable>
                     </View>
                     <View
                         style={{
                             borderBottomColor: '#FC6E77',
                             borderBottomWidth: 2,
-                            width: 350,
+                            width: '100%',
                             alignSelf: 'center',
                             marginTop: 15,
                             marginBottom: 10,
                         }}
                     />
-                    <View style={styles.innerContainer}>
-                        <Text style={styles.subText}>Contributor</Text>
-                    </View>
-                    <View style={[styles.innerContainer, { margin: 0 }]}>
-                        {props.event.confirmedUsers.map(user => {
-                            return (
-                                <View style={styles.iconContainer}>
-                                    <UserIcon initials={user.slice(0, 2)} />
-                                </View>
-                            )
-                        })}
-                    </View>
-                    <View style={styles.innerContainer}>
-                        <View style={{ flexDirection: 'column', marginTop: 10, alignItems: 'left', fontWeight: 'normal' }}>
-                            <View style={styles.detailsContainer}>
-                                <Text style={styles.detailsLabel}>Start</Text>
-                                <Text style={styles.detailsText}>{props.event.start}</Text>
-                            </View>
-                            <View style={styles.detailsContainer}>
-                                <Text style={styles.detailsLabel}>End</Text>
-                                <Text style={styles.detailsText}>{props.event.end}</Text>
-                            </View>
-                            <View style={styles.detailsContainer}>
-                                <View style={styles.detailsLabel}>
-                                    <Ionicons name='location-outline' size={24} color='#FF7880' />
-                                </View>
-                                <Text style={styles.detailsText}>
-                                    {props.event.location}
-                                </Text>
-                            </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.subText}>Contributors</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            {event.confirmedUsers.map((user, index) => (
+                                <UserIcon key={index} initials={user.slice(0, 2)} />
+                            ))}
                         </View>
                     </View>
-                    <View style={[styles.innerContainer, { justifyContent: 'center' }]}>
-                        <Pressable style={[styles.confirmButton, { backgroundColor: '#FF7880' }]} onPress={() => { }}>
-                            <Text style={[styles.confirmText, { color: '#ffffff' }]}>Confirm</Text>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.detailsLabel}>Start</Text>
+                        <Text style={styles.detailsText}>
+                            {formatEventTime(event.start)}
+                        </Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Text style={styles.detailsLabel}>End</Text>
+                        <Text style={styles.detailsText}>
+                            {formatEventTime(event.end)}
+                        </Text>
+                    </View>
+                    <View style={styles.detailsContainer}>
+                        <Ionicons name='location-outline' size={24} color='#FF7880' />
+                        <Text style={styles.detailsText}>{event.location}</Text>
+                    </View>
+                    <View style={styles.innerContainer}>
+                        <Pressable
+                            style={[styles.confirmButton, { backgroundColor: '#FF7880' }]}
+                            onPress={() => {
+                                // Handle confirmation logic
+                            }}
+                        >
+                            <Text style={{ ...styles.confirmText, color: '#ffffff' }}>Confirm</Text>
                         </Pressable>
-                        <Pressable style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]} onPress={() => { }}>
-                            <Text style={[styles.confirmText, { color: '#FF7880' }]}>Decline</Text>
+                        <Pressable
+                            style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]}
+                            onPress={() => {
+                                // Handle decline logic
+                            }}
+                        >
+                            <Text style={{ ...styles.confirmText, color: '#FF7880' }}>Decline</Text>
                         </Pressable>
                     </View>
                 </View>

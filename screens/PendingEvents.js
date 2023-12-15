@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, ScrollView} from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PendingEvent from './PendingEvent'
+import { useNavigation } from '@react-navigation/native';
 
 const PendingEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)
-
+    const navigation = useNavigation();
     useEffect(() => {
         setShowSingleEvent(false)
         setEventId(null)
@@ -71,6 +72,13 @@ const PendingEventsScreen = ({ route }) => {
             color: 'black',
             marginVertical: 5,
         },
+        detailsTextContainer: {
+            flex: 1,
+            marginRight: 20,
+        },
+        remindButtonContainer: {
+            marginRight: 190,
+        },
         detailsText2: {
             color: '#6C7072',
             marginVertical: 5,
@@ -104,16 +112,19 @@ const PendingEventsScreen = ({ route }) => {
     });
 
     const handleSingleEvent = (event) => {
-        setShowSingleEvent(!showSingleEvent)
-        setEventId(event.id)
-        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
-            setEventType('red')
-        } else if (event.status != 'Tentatively') {
-            setEventType('green')
+        setShowSingleEvent(!showSingleEvent);
+        setEventId(event.id);
+        if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
+            setEventType('red');
+        } else if (event.status !== 'Tentatively') {
+            setEventType('green');
         } else {
-            setEventType('yellow')
+            setEventType('yellow');
         }
+        navigation.navigate('PendingEvent', { event });
     };
+
+
 
     if (showSingleEvent && eventType == 'yellow') {
         const events = route.pendingEvents.filter(item => {
@@ -129,10 +140,27 @@ const PendingEventsScreen = ({ route }) => {
             </View>
         )
     }
+    const formatEventTime = (startTimeString, endTimeString) => {
+        const startTime = new Date(startTimeString);
+        const endTime = new Date(endTimeString);
+
+        const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
+        const startDay = startTime.getDate().toString().padStart(2, '0');
+        const startHours = startTime.getHours();
+        const startPeriod = startHours >= 12 ? 'PM' : 'AM';
+        const formattedStartHours = (startHours % 12 || 12).toString().padStart(2, '0');
+
+        const endHours = endTime.getHours();
+        const endPeriod = endHours >= 12 ? 'PM' : 'AM';
+        const formattedEndHours = (endHours % 12 || 12).toString().padStart(2, '0');
+
+        return `${startMonth}/${startDay} ${formattedStartHours} ${startPeriod} - ${formattedEndHours} ${endPeriod}`;
+    };
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.contentContainer}>
                     {route.pendingEvents.map(event => {
                         let statusColor = '#FFBE5C'  // tentatively, only waiting on you
@@ -160,7 +188,12 @@ const PendingEventsScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.detailsContainer}>
                                         <Text style={styles.detailsLabel}>Time</Text>
-                                        <Text style={styles.detailsText}>{event.time}</Text>
+                                        <Text style={styles.detailsText}>
+                                            <Text style={styles.detailsText}>
+                                                {formatEventTime(event.start, event.end)}
+                                            </Text>
+
+                                        </Text>
                                     </View>
                                     <View style={styles.detailsContainer}>
                                         <View style={styles.detailsLabel}>
@@ -174,19 +207,25 @@ const PendingEventsScreen = ({ route }) => {
                                         <View style={styles.detailsLabel}>
                                             <Ionicons name='time-outline' size={20} color='#FF7880' />
                                         </View>
-                                        <Text style={styles.detailsText2}>{waitingText}</Text>
-                                        <View style={styles.container}>
-                                            {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
-                                                <Pressable style={styles.remindButton} onPress={() => { }}>
-                                                    <Text style={styles.remindText}>Remind</Text>
-                                                </Pressable>}
+                                        <View style={styles.detailsTextContainer}>
+                                            <Text style={styles.detailsText2}>
+                                                Waiting on {event.pendingUsers.map(user => user.firstname).join(', ')}
+                                                {event.pendingUsers.length > 1 ? '\n' + ` & ${event.pendingUsers.length - 1} others` : ''}
+                                            </Text>
                                         </View>
+                                    </View>
+                                    <View style={styles.remindButtonContainer}>
+                                        {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
+                                            <Pressable style={styles.remindButton} onPress={() => { }}>
+                                                <Text style={styles.remindText}>Remind</Text>
+                                            </Pressable>}
                                     </View>
                                 </View>
                             </TouchableOpacity>
                         )
                     })}
                 </View>
+                </ScrollView>
             </ImageBackground>
         </View>
     );

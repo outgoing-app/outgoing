@@ -8,9 +8,10 @@ import UpcomingEventsScreen from './screens/UpcomingEvents';
 import HomeScreen from './screens/HomeScreen';
 import NewGroup from './screens/NewGroup';
 import axios from 'axios'
+import PendingEventScreen from './screens/PendingEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
-const IP_ADDRESS = '128.59.179.18'; // change this to your IP ADDRESS to connect with the server
+const IP_ADDRESS = '10.207.85.215'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 
@@ -114,6 +115,7 @@ const App = () => {
                     />}
                 />
                 <Tab.Screen name="Profile" component={HomeScreen} />
+
             </Tab.Navigator>
         </NavigationContainer>
     );

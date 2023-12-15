@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -93,6 +93,8 @@ const ConfirmedEventsScreen = ({ route }) => {
         },
         iconContainer: {
             marginVertical: 3,
+            marginLeft:3,
+            marginHorizontal: -15,
             width: 25,
             height: 25,
             borderRadius: 35,
@@ -107,9 +109,28 @@ const ConfirmedEventsScreen = ({ route }) => {
         },
     });
 
+    const formatEventTime = (startTimeString, endTimeString) => {
+        const startTime = new Date(startTimeString);
+        const endTime = new Date(endTimeString);
+
+        const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
+        const startDay = startTime.getDate().toString().padStart(2, '0');
+        const startHours = startTime.getHours();
+        const startPeriod = startHours >= 12 ? 'PM' : 'AM';
+        const formattedStartHours = (startHours % 12 || 12).toString().padStart(2, '0');
+
+        const endHours = endTime.getHours();
+        const endPeriod = endHours >= 12 ? 'PM' : 'AM';
+        const formattedEndHours = (endHours % 12 || 12).toString().padStart(2, '0');
+
+        return `${startMonth}/${startDay} ${formattedStartHours} ${startPeriod} - ${formattedEndHours} ${endPeriod}`;
+    };
+
+
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={styles.contentContainer}>
                     {route.confirmedEvents.map(event => {
                         return (
@@ -122,7 +143,12 @@ const ConfirmedEventsScreen = ({ route }) => {
                                 </View>
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.detailsLabel}>Time</Text>
-                                    <Text style={styles.detailsText}>{event.time}</Text>
+                                    <Text style={styles.detailsText}>
+                                        <Text style={styles.detailsText}>
+                                            {formatEventTime(event.start, event.end)}
+                                        </Text>
+
+                                    </Text>
                                 </View>
                                 <View style={styles.detailsContainer}>
                                     <View style={styles.detailsLabel}>
@@ -150,6 +176,7 @@ const ConfirmedEventsScreen = ({ route }) => {
                         )
                     })}
                 </View>
+                </ScrollView>
             </ImageBackground>
         </View>
     );
