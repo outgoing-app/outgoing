@@ -13,7 +13,7 @@ import CreateEvent from './screens/CreateEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
 
-const IP_ADDRESS = '10.207.85.215'; // change this to your IP ADDRESS to connect with the server
+const IP_ADDRESS = '192.168.1.158'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +30,15 @@ const App = () => {
             await axios.delete(`${serverUrl}/event/${eventId}`);
         } catch (error) {
             console.error('Error deleting event:', error);
+        }
+    };
+
+    const confirmEvent = async (eventId) => {
+        try {
+            const serverUrl = `http://${IP_ADDRESS}:3000`;
+            await axios.post(`${serverUrl}/event/confirm/${eventId}`);
+        } catch (error) {
+            console.error('Error confirming event:', error);
         }
     };
 
@@ -120,8 +129,8 @@ const App = () => {
                         groups={groups}
                     />}
                 />
-                <Tab.Screen 
-                    name=" " 
+                <Tab.Screen
+                    name=" "
                     children={() => <CreateEvent
                         userID={CURRENT_USER_ID}
                         users={users}
@@ -137,6 +146,7 @@ const App = () => {
                         onDeleteEvent={handleDeleteEvent}
                         getConfirmedEvents={getConfirmedEvents}
                         getPendingEvents={getPendingEvents}
+                        confirmEvent={confirmEvent}
                     />}
                 />
                 <Tab.Screen name="Profile" component={HomeScreen} />
@@ -151,13 +161,13 @@ const AddButton = () => {
 
     return (
         <Ionicons name='add-circle'
-            size={75} 
+            size={75}
             color={'#FF7880'}
             style={{
-            bottom: 5,
-            height: 100,
-            borderRadius: 68
-        }}/>
+                bottom: 5,
+                height: 100,
+                borderRadius: 68
+            }} />
     );
 };
 
