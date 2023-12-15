@@ -5,7 +5,6 @@ import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import UserIcon from '../components/UserIcon';
-import moment from "moment/moment";
 
 const PendingEvent = (props) => {
     const [home, setHome] = useState(false)
@@ -15,14 +14,9 @@ const PendingEvent = (props) => {
 
     // Function to format event time
     const formatEventTime = (timeString) => {
-        const dateFormat = 'MMMM DD';
-        const date = moment(timeString).format(dateFormat);
-        console.log("Start time:", timeString);
-        const formatString = 'mm:ss a';
-
-        const time = timeString?.replace(/T\d{2}:/, 'T00:') ? moment(timeString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString) : 'Invalid Time';
-
-        return `${date} at ${time}`;
+        const time = new Date(timeString);
+        const formattedTime = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        return formattedTime;
     };
 
     const styles = StyleSheet.create({
@@ -83,6 +77,7 @@ const PendingEvent = (props) => {
             width: 25,
             height: 25,
             borderRadius: 35,
+            backgroundColor: '#FF7880',
             justifyContent: 'center',
             alignItems: 'center',
         },
@@ -111,7 +106,7 @@ const PendingEvent = (props) => {
                             style={styles.iconContainer}
                             onPress={() => navigation.goBack()}
                         >
-                            <Ionicons name='close-circle-outline' size={28} color='#FFC6CA' />
+                            <Ionicons name='close-circle-outline' size={28} color='#FAE0E0' />
                         </Pressable>
                     </View>
                     <View
@@ -126,10 +121,9 @@ const PendingEvent = (props) => {
                     />
                     <View style={styles.detailsContainer}>
                         <Text style={styles.subText}>Contributors</Text>
-                        <View style={{flexDirection:'column'}}></View>
                         <View style={{ flexDirection: 'row' }}>
                             {event.confirmedUsers.map((user, index) => (
-                                <UserIcon initials={user.initials} size={35}/>
+                                <UserIcon key={index} initials={user.initials} />
                             ))}
                         </View>
                     </View>
@@ -176,4 +170,5 @@ const PendingEvent = (props) => {
 };
 
 export default PendingEvent;
+
 
