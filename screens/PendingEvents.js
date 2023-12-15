@@ -8,7 +8,7 @@ import VotingPoll from './VotingPoll';
 import { useNavigation } from '@react-navigation/native';
 import moment from "moment/moment";
 
-const PendingEventsScreen = ({ route }) => {
+const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)
@@ -144,7 +144,11 @@ const PendingEventsScreen = ({ route }) => {
         return (
             <View style={styles.container}>
                 <ImageBackground source={image} style={styles.image}>
-                    <PendingEvent event={events[0]} />
+                    <PendingEvent
+                        event={events[0]}
+                        onDeleteEvent={onDeleteEvent}
+                        confirmEvent={confirmEvent}
+                    />
                 </ImageBackground>
             </View>
         )
@@ -164,7 +168,7 @@ const PendingEventsScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
-              <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose}/>
+                <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose} />
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     <View style={styles.contentContainer}>
                         {route.pendingEvents.map(event => {
