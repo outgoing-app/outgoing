@@ -33,15 +33,6 @@ const App = () => {
         }
     };
 
-    const confirmEvent = async (eventId) => {
-        try {
-            const serverUrl = `http://${IP_ADDRESS}:3000`;
-            await axios.post(`${serverUrl}/event/confirm/${eventId}`);
-        } catch (error) {
-            console.error('Error confirming event:', error);
-        }
-    };
-
     const getConfirmedEvents = async () => {
         try {
             const confirmedEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/confirmed`)

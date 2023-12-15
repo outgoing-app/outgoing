@@ -84,11 +84,7 @@ const UpcomingEventsScreen = (props) => {
                     }
                     navigationState={{ index, routes }}
                     renderScene={SceneMap({
-                        pending: () => <PendingEventsScreen
-                            route={{ pendingEvents: props.pendingEvents }}
-                            onDeleteEvent={props.onDeleteEvent}
-                            confirmEvent={props.confirmEvent}
-                        />,
+                        pending: () => <PendingEventsScreen route={{ pendingEvents: props.pendingEvents }} />,
                         confirmed: () => <ConfirmedEventsScreen
                             route={{ confirmedEvents: props.confirmedEvents }}
                             onDeleteEvent={props.onDeleteEvent}
