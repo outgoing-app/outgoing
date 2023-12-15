@@ -72,12 +72,14 @@ const UpcomingEventsScreen = (props) => {
 
     // Retrieve data passed as props from top-level component
     const [users, setUsers] = useState(props.users)
-    const [events, setEvents] = useState(props.events)
+    const [pendingEvents, setPendingEvents] = useState(props.pendingEvents)
+    const [confirmedEvents, setConfirmedEvents] = useState(props.confirmedEvents)
 
     // [TO BE REMOVED] Check that data are successfully loaded in
     console.log('current userId: ', props.userId)
     console.log('users: ', users)
-    console.log('events: ', events)
+    console.log('pending events: ', pendingEvents)
+    console.log('confirmed events: ', confirmedEvents)
 
     const navigation = useNavigation();
 
