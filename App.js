@@ -20,6 +20,7 @@ const App = () => {
     const [groups, setGroups] = useState([])
     const [pendingEvents, setPendingEvents] = useState([])
     const [confirmedEvents, setConfirmedEvents] = useState([])
+    const [handleDeleteEvent] = useState([])
 
     useEffect(() => {
         async function getAllUsers() {
@@ -31,6 +32,15 @@ const App = () => {
                 console.log('errors: ', error)
             }
         }
+        const handleDeleteEvent = async (eventId) => {
+            try {
+                const serverUrl = `http://${IP_ADDRESS}:3000`;
+                await axios.delete(`${serverUrl}/events/${eventId}`);
+            } catch (error) {
+                console.error('Error deleting event:', error);
+            }
+        };
+
         async function getAllGroups() {
             try {
                 const groups = await axios.get(`http://${IP_ADDRESS}:3000/groups`)
@@ -112,6 +122,8 @@ const App = () => {
                         users={users}
                         pendingEvents={pendingEvents}
                         confirmedEvents={confirmedEvents}
+                        onDeleteEvent={handleDeleteEvent}
+
                     />}
                 />
                 <Tab.Screen name="Profile" component={HomeScreen} />

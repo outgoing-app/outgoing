@@ -161,70 +161,70 @@ const PendingEventsScreen = ({ route }) => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
-                <View style={styles.contentContainer}>
-                    {route.pendingEvents.map(event => {
-                        let statusColor = '#FFBE5C'  // tentatively, only waiting on you
-                        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
-                            statusColor = '#EA5C1F'
-                        } else if (event.status != 'Tentatively') {
-                            statusColor = '#B6D639'
-                        }
-                        let waitingText = 'Waiting on ' + event.pendingUsers[0]
-                        const additionalUsers = event.pendingUsers.length - 1
-                        if (additionalUsers > 0) {
-                            waitingText += ' & ' + additionalUsers + ' others'
-                        }
-                        return (
-                            <TouchableOpacity onPress={() => handleSingleEvent(event)}>
-                                <View style={styles.outerContainer}>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.subText}>{event.title}</Text>
-                                        <View style={styles.statusCircle}>
-                                            <Ionicons name='ellipse' size={10} color={statusColor} />
+                    <View style={styles.contentContainer}>
+                        {route.pendingEvents.map(event => {
+                            let statusColor = '#FFBE5C'  // tentatively, only waiting on you
+                            if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
+                                statusColor = '#EA5C1F'
+                            } else if (event.status != 'Tentatively') {
+                                statusColor = '#B6D639'
+                            }
+                            let waitingText = 'Waiting on ' + event.pendingUsers[0]
+                            const additionalUsers = event.pendingUsers.length - 1
+                            if (additionalUsers > 0) {
+                                waitingText += ' & ' + additionalUsers + ' others'
+                            }
+                            return (
+                                <TouchableOpacity onPress={() => handleSingleEvent(event)}>
+                                    <View style={styles.outerContainer}>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.subText}>{event.title}</Text>
+                                            <View style={styles.statusCircle}>
+                                                <Ionicons name='ellipse' size={10} color={statusColor} />
+                                            </View>
+                                            <View style={styles.container}>
+                                                <Text style={styles.statusText}>{event.status}</Text>
+                                            </View>
                                         </View>
-                                        <View style={styles.container}>
-                                            <Text style={styles.statusText}>{event.status}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.detailsLabel}>Time</Text>
-                                        <Text style={styles.detailsText}>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.detailsLabel}>Time</Text>
                                             <Text style={styles.detailsText}>
-                                                {formatEventTime(event.start, event.end)}
-                                            </Text>
+                                                <Text style={styles.detailsText}>
+                                                    {formatEventTime(event.start, event.end)}
+                                                </Text>
 
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <View style={styles.detailsLabel}>
-                                            <Ionicons name='location-outline' size={20} color='#FF7880' />
-                                        </View>
-                                        <Text style={styles.detailsText}>
-                                            {event.location}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <View style={styles.detailsLabel}>
-                                            <Ionicons name='time-outline' size={20} color='#FF7880' />
-                                        </View>
-                                        <View style={styles.detailsTextContainer}>
-                                            <Text style={styles.detailsText2}>
-                                                Waiting on {event.pendingUsers.map(user => user.firstname).join(', ')}
-                                                {event.pendingUsers.length > 1 ? '\n' + ` & ${event.pendingUsers.length - 1} others` : ''}
                                             </Text>
                                         </View>
+                                        <View style={styles.detailsContainer}>
+                                            <View style={styles.detailsLabel}>
+                                                <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                            </View>
+                                            <Text style={styles.detailsText}>
+                                                {event.location}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.detailsContainer}>
+                                            <View style={styles.detailsLabel}>
+                                                <Ionicons name='time-outline' size={20} color='#FF7880' />
+                                            </View>
+                                            <View style={styles.detailsTextContainer}>
+                                                <Text style={styles.detailsText2}>
+                                                    Waiting on {event.pendingUsers.map(user => user.firstname).join(', ')}
+                                                    {event.pendingUsers.length > 1 ? '\n' + ` & ${event.pendingUsers.length - 1} others` : ''}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.remindButtonContainer}>
+                                            {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
+                                                <Pressable style={styles.remindButton} onPress={() => { }}>
+                                                    <Text style={styles.remindText}>Remind</Text>
+                                                </Pressable>}
+                                        </View>
                                     </View>
-                                    <View style={styles.remindButtonContainer}>
-                                        {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
-                                            <Pressable style={styles.remindButton} onPress={() => { }}>
-                                                <Text style={styles.remindText}>Remind</Text>
-                                            </Pressable>}
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })}
-                </View>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
                 </ScrollView>
             </ImageBackground>
         </View>
