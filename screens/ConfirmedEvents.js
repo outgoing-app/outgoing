@@ -191,6 +191,7 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
                                     )}
                                 </View>
                                 <View style={styles.buttonContainer}>
+                                    <Pressable>
                                     style={[styles.cancelButton, { backgroundColor: '#FAE0E0' }]}
                                     onPress={() => handleCancelEvent(event._id)}
                                         <Text style={{ ...styles.cancelText, color: '#FF7880' }}>Cancel</Text>
