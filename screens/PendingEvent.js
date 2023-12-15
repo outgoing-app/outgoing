@@ -11,15 +11,17 @@ const PendingEvent = ({ event, onDeleteEvent }) => {
     const [home, setHome] = useState(false)
     const navigation = useNavigation();
     //const event = route.params.event; // Extracting event from route params
-
+    
     // Function to format event time
     const formatEventTime = (timeString) => {
+        const dateFormat = 'MMMM DD';
+        const date = moment(timeString).format(dateFormat);
         console.log("Start time:", timeString);
         const formatString = 'mm:ss a';
 
         const time = timeString?.replace(/T\d{2}:/, 'T00:') ? moment(timeString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString) : 'Invalid Time';
 
-        return `${time}`;
+        return `${date} at ${time}`;
     };
 
     const styles = StyleSheet.create({
