@@ -8,6 +8,7 @@ import UpcomingEventsScreen from './screens/UpcomingEvents';
 import HomeScreen from './screens/HomeScreen';
 import NewGroup from './screens/NewGroup';
 import axios from 'axios'
+import CreateEvent from './screens/CreateEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
 const IP_ADDRESS = '192.168.1.158'; // change this to your IP ADDRESS to connect with the server
@@ -103,7 +104,7 @@ const App = () => {
                         groups={groups}
                     />}
                 />
-                <Tab.Screen name=" " component={NewGroup} />
+                <Tab.Screen name=" " component={CreateEvent} />
                 <Tab.Screen
                     name="Events"
                     children={() => <UpcomingEventsScreen
@@ -123,17 +124,14 @@ const AddButton = () => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity
+        <Ionicons name='add-circle'
+            size={75} 
+            color={'#FF7880'}
             style={{
-                bottom: 5,
-                height: 100,
-                borderRadius: 68,
-                alignItems: 'center',
-            }}
-            onPress={() => navigation.navigate('NewGroup')}
-        >
-            <Ionicons name="add-circle" size={75} color={'#FF7880'} />
-        </TouchableOpacity>
+            bottom: 5,
+            height: 100,
+            borderRadius: 68
+        }}/>
     );
 };
 
