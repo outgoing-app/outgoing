@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native';
 import image from '../assets/background.png';
 import { useFonts, PublicSans_700Bold, PublicSans_400Regular } from "@expo-google-fonts/public-sans";
@@ -6,6 +6,11 @@ import CalendarComponent from '../components/Calendar';
 import VotingPoll from './VotingPoll';
 
 const HomeScreen = () => {
+    const [isModalVisible, setIsModalVisible] = useState(true);
+    const onModalClose = () => {
+        setIsModalVisible(false);
+    };
+    
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
@@ -37,7 +42,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.mainContent}>
-                    <VotingPoll/>
+                    <VotingPoll isVisible={isModalVisible} onClose={onModalClose}/>
                 </View>
             </ImageBackground>
         </View>

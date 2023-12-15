@@ -1,5 +1,5 @@
 import React, { useEffect , useState} from 'react';
-import { View, Text, StyleSheet, ImageBackground, Button} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Button, Modal} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import BackButton from '../components/BackButton';
@@ -21,7 +21,7 @@ const times = [
 ];
 
 
-const VotingPoll = ({options}) => {
+const VotingPoll = ({isVisible, onClose}) => {
     const navigation = useNavigation();
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
@@ -63,6 +63,7 @@ const VotingPoll = ({options}) => {
           borderColor: '#FC6E77',
           borderWidth: 2,
           marginBottom: 0,
+          marginTop: 150,
         },
         innerContainer: {
           marginVertical: 5,
@@ -107,6 +108,7 @@ const VotingPoll = ({options}) => {
     });
 
     return (
+        <Modal transparent={true} visible={isVisible}>
         <View style={styles.outerContainer}>
             <Text style={styles.headerText}>{eventName}</Text>
             <View
@@ -146,9 +148,10 @@ const VotingPoll = ({options}) => {
                 />)}
             </View>
             <View style={{alignItems: 'center'}}>
-                <CreateButton buttonText="Vote" onPress={vote}/>
+                <CreateButton buttonText="Vote" onPress={onClose}/>
             </View>
         </View>
+        </Modal>
     );
 };
 
