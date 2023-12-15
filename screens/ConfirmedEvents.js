@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -73,14 +73,14 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
         },
         iconContainer: {
             marginVertical: 3,
-            marginLeft:3,
+            marginLeft: 3,
             marginHorizontal: -15,
             width: 25,
             height: 25,
             borderRadius: 35,
             backgroundColor: '#FF7880',
             justifyContent: 'center',
-            marginBottom:10,
+            marginBottom: 10,
         },
         iconText: {
             color: 'white',
@@ -107,7 +107,7 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
             justifyContent: 'flex-end',
             alignItems: 'center',
             marginTop: -35,
-            marginBottom:-10,
+            marginBottom: -10,
         },
 
     });
