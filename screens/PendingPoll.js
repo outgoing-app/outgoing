@@ -9,7 +9,7 @@ import UserIcon from '../components/UserIcon';
 import GroupIcon from '../components/GroupIcon';
 import { CheckBox } from '@rneui/themed';
 import Header from '../components/Header';
-import VotingPoll from '../components/VotingPoll';
+import VotingPoll from './VotingPoll';
 
 const PendingPoll = () => {
     const navigation = useNavigation();
