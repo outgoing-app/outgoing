@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, Pressable, ScrollView } from '
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
 const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => {
     const [fontsLoaded] = useFonts({
@@ -128,21 +129,16 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
 
 
     const formatEventTime = (startTimeString, endTimeString) => {
-        const startTime = new Date(startTimeString);
-        const endTime = new Date(endTimeString);
+        console.log("Start time:", startTimeString);
+        console.log("End time:", endTimeString);
+        const formatString = 'mm:ss a';
 
-        const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
-        const startDay = startTime.getDate().toString().padStart(2, '0');
-        const startHours = startTime.getHours();
-        const startPeriod = startHours >= 12 ? 'PM' : 'AM';
-        const formattedStartHours = (startHours % 12 || 12).toString().padStart(2, '0');
+        const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
 
-        const endHours = endTime.getHours();
-        const endPeriod = endHours >= 12 ? 'PM' : 'AM';
-        const formattedEndHours = (endHours % 12 || 12).toString().padStart(2, '0');
-
-        return `${startMonth}/${startDay} ${formattedStartHours} ${startPeriod} - ${formattedEndHours} ${endPeriod}`;
+        return `${startTime} - ${endTime}`;
     };
+
 
     return (
         <View style={styles.container}>
@@ -160,9 +156,7 @@ const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => 
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.detailsLabel}>Time</Text>
                                     <Text style={styles.detailsText}>
-                                        <Text style={styles.detailsText}>
-                                            {formatEventTime(event.start, event.end)}
-                                        </Text>
+                                        {formatEventTime(event.start, event.end)}
                                     </Text>
                                 </View>
                                 <View style={styles.detailsContainer}>

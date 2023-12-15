@@ -26,6 +26,7 @@
     "expo-font": "~11.4.0",
     "expo-status-bar": "~1.6.0",
     "express-validator": "^7.0.1",
+    "moment": "^2.29.4",
     "mongoose": "^8.0.3",
     "native-base": "^3.4.28",
     "nodemon": "^3.0.2",

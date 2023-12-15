@@ -153,9 +153,7 @@ const PendingEvent = (props) => {
                         </Pressable>
                         <Pressable
                             style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]}
-                            onPress={() => {
-                                // Handle decline logic
-                            }}
+                            onPress={() => handleCancelEvent(event._id)}
                         >
                             <Text style={{ ...styles.confirmText, color: '#FF7880' }}>Decline</Text>
                         </Pressable>

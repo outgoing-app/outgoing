@@ -11,7 +11,7 @@ import axios from 'axios'
 import PendingEventScreen from './screens/PendingEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
-const IP_ADDRESS = '192.168.1.158'; // change this to your IP ADDRESS to connect with the server
+const IP_ADDRESS = '10.207.85.215'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 

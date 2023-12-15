@@ -5,6 +5,7 @@ import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-googl
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PendingEvent from './PendingEvent'
 import { useNavigation } from '@react-navigation/native';
+import moment from "moment/moment";
 
 const PendingEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
@@ -141,21 +142,16 @@ const PendingEventsScreen = ({ route }) => {
         )
     }
     const formatEventTime = (startTimeString, endTimeString) => {
-        const startTime = new Date(startTimeString);
-        const endTime = new Date(endTimeString);
+        console.log("Start time:", startTimeString);
+        console.log("End time:", endTimeString);
+        const formatString = 'mm:ss a';
 
-        const startMonth = (startTime.getMonth() + 1).toString().padStart(2, '0');
-        const startDay = startTime.getDate().toString().padStart(2, '0');
-        const startHours = startTime.getHours();
-        const startPeriod = startHours >= 12 ? 'PM' : 'AM';
-        const formattedStartHours = (startHours % 12 || 12).toString().padStart(2, '0');
+        const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
 
-        const endHours = endTime.getHours();
-        const endPeriod = endHours >= 12 ? 'PM' : 'AM';
-        const formattedEndHours = (endHours % 12 || 12).toString().padStart(2, '0');
-
-        return `${startMonth}/${startDay} ${formattedStartHours} ${startPeriod} - ${formattedEndHours} ${endPeriod}`;
+        return `${startTime} - ${endTime}`;
     };
+
 
     return (
         <View style={styles.container}>
