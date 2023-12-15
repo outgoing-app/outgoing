@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, ScrollView } from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PendingEvent from './PendingEvent'
 import VotingPoll from './VotingPoll';
+import { useNavigation } from '@react-navigation/native';
+import moment from "moment/moment";
 
 const PendingEventsScreen = ({ route }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
@@ -16,7 +18,7 @@ const PendingEventsScreen = ({ route }) => {
         setIsVotingVisible(false)
         console.log("hi")
     };
-
+    const navigation = useNavigation();
     useEffect(() => {
         setShowSingleEvent(false)
         setEventId(null)
@@ -78,6 +80,13 @@ const PendingEventsScreen = ({ route }) => {
             color: 'black',
             marginVertical: 5,
         },
+        detailsTextContainer: {
+            flex: 1,
+            marginRight: 20,
+        },
+        remindButtonContainer: {
+            marginRight: 190,
+        },
         detailsText2: {
             color: '#6C7072',
             marginVertical: 5,
@@ -111,21 +120,24 @@ const PendingEventsScreen = ({ route }) => {
     });
 
     const handleSingleEvent = (event) => {
-        setShowSingleEvent(!showSingleEvent)
-        setEventId(event.id)
-        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
-            setEventType('red')
+        setShowSingleEvent(!showSingleEvent);
+        setEventId(event._id);
+        if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
+            setEventType('red');
             setIsVotingVisible(true)
-        } else if (event.status != 'Tentatively') {
-            setEventType('green')
+        } else if (event.status !== 'Tentatively') {
+            setEventType('green');
         } else {
-            setEventType('yellow')
+            setEventType('yellow');
         }
+        //navigation.navigate('PendingEvent', { event });
     };
 
-    if (showSingleEvent && eventType == 'yellow') {
+
+
+    if (showSingleEvent) {
         const events = route.pendingEvents.filter(item => {
-            if (item.id == eventId) {
+            if (item._id == eventId) {
                 return item
             }
         })
@@ -137,65 +149,88 @@ const PendingEventsScreen = ({ route }) => {
             </View>
         )
     }
+    const formatEventTime = (startTimeString, endTimeString) => {
+        console.log("Start time:", startTimeString);
+        console.log("End time:", endTimeString);
+        const formatString = 'mm:ss a';
+
+        const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+
+        return `${startTime} - ${endTime}`;
+    };
+
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
-                <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose}/>
-                <View style={styles.contentContainer}>
-                    {route.pendingEvents.map(event => {
-                        let statusColor = '#FFBE5C'  // tentatively, only waiting on you
-                        if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
-                            statusColor = '#EA5C1F'
-                        } else if (event.status != 'Tentatively') {
-                            statusColor = '#B6D639'
-                        }
-                        let waitingText = 'Waiting on ' + event.pendingUsers[0]
-                        const additionalUsers = event.pendingUsers.length - 1
-                        if (additionalUsers > 0) {
-                            waitingText += ' & ' + additionalUsers + ' others'
-                        }
-                        return (
-                            <TouchableOpacity onPress={() => handleSingleEvent(event)}>
-                                <View style={styles.outerContainer}>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.subText}>{event.title}</Text>
-                                        <View style={styles.statusCircle}>
-                                            <Ionicons name='ellipse' size={10} color={statusColor} />
+              <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose}/>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+                    <View style={styles.contentContainer}>
+                        {route.pendingEvents.map(event => {
+                            let statusColor = '#FFBE5C'  // tentatively, only waiting on you
+                            if (event.status == 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
+                                statusColor = '#EA5C1F'
+                            } else if (event.status != 'Tentatively') {
+                                statusColor = '#B6D639'
+                            }
+                            let waitingText = 'Waiting on ' + event.pendingUsers[0]
+                            const additionalUsers = event.pendingUsers.length - 1
+                            if (additionalUsers > 0) {
+                                waitingText += ' & ' + additionalUsers + ' others'
+                            }
+                            return (
+                                <TouchableOpacity onPress={() => handleSingleEvent(event)}>
+                                    <View style={styles.outerContainer}>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.subText}>{event.title}</Text>
+                                            <View style={styles.statusCircle}>
+                                                <Ionicons name='ellipse' size={10} color={statusColor} />
+                                            </View>
+                                            <View style={styles.container}>
+                                                <Text style={styles.statusText}>{event.status}</Text>
+                                            </View>
                                         </View>
-                                        <View style={styles.container}>
-                                            <Text style={styles.statusText}>{event.status}</Text>
+                                        <View style={styles.detailsContainer}>
+                                            <Text style={styles.detailsLabel}>Time</Text>
+                                            <Text style={styles.detailsText}>
+                                                <Text style={styles.detailsText}>
+                                                    {formatEventTime(event.start, event.end)}
+                                                </Text>
+
+                                            </Text>
                                         </View>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <Text style={styles.detailsLabel}>Time</Text>
-                                        <Text style={styles.detailsText}>{event.time}</Text>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <View style={styles.detailsLabel}>
-                                            <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                        <View style={styles.detailsContainer}>
+                                            <View style={styles.detailsLabel}>
+                                                <Ionicons name='location-outline' size={20} color='#FF7880' />
+                                            </View>
+                                            <Text style={styles.detailsText}>
+                                                {event.location}
+                                            </Text>
                                         </View>
-                                        <Text style={styles.detailsText}>
-                                            {event.location}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailsContainer}>
-                                        <View style={styles.detailsLabel}>
-                                            <Ionicons name='time-outline' size={20} color='#FF7880' />
+                                        <View style={styles.detailsContainer}>
+                                            <View style={styles.detailsLabel}>
+                                                <Ionicons name='time-outline' size={20} color='#FF7880' />
+                                            </View>
+                                            <View style={styles.detailsTextContainer}>
+                                                <Text style={styles.detailsText2}>
+                                                    Waiting on {event.pendingUsers.map(user => user.firstname).join(', ')}
+                                                    {event.pendingUsers.length > 1 ? '\n' + ` & ${event.pendingUsers.length - 1} others` : ''}
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <Text style={styles.detailsText2}>{waitingText}</Text>
-                                        <View style={styles.container}>
+                                        <View style={styles.remindButtonContainer}>
                                             {!(event.pendingUsers.length == 1 && event.pendingUsers[0] == 'You') &&
                                                 <Pressable style={styles.remindButton} onPress={() => { }}>
                                                     <Text style={styles.remindText}>Remind</Text>
                                                 </Pressable>}
                                         </View>
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })}
-                </View>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
+                </ScrollView>
             </ImageBackground>
         </View>
     );

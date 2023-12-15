@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, ScrollView } from 'react-native';
 import image from '../assets/background.png';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
-const ConfirmedEventsScreen = ({ route }) => {
+const ConfirmedEventsScreen = ({ route, onDeleteEvent, getConfirmedEvents }) => {
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
         PublicSans_400Regular,
@@ -61,26 +62,6 @@ const ConfirmedEventsScreen = ({ route }) => {
             color: 'black',
             marginVertical: 5,
         },
-        detailsText2: {
-            color: '#6C7072',
-            marginVertical: 5,
-            fontStyle: 'italic'
-        },
-        remindButton: {
-            borderRadius: 16,
-            color: '#ffffff',
-            backgroundColor: '#FF7880',
-            marginVertical: 5,
-            width: 60,
-            marginLeft: 'auto'
-        },
-        remindText: {
-            fontSize: 12,
-            letterSpacing: 0.25,
-            padding: 5,
-            color: '#ffffff',
-            textAlign: 'center'
-        },
         statusText: {
             color: '#6C7072',
             marginVertical: 5,
@@ -93,11 +74,14 @@ const ConfirmedEventsScreen = ({ route }) => {
         },
         iconContainer: {
             marginVertical: 3,
+            marginLeft: 3,
+            marginHorizontal: -15,
             width: 25,
             height: 25,
             borderRadius: 35,
             backgroundColor: '#FF7880',
             justifyContent: 'center',
+            marginBottom: 10,
         },
         iconText: {
             color: 'white',
@@ -105,15 +89,64 @@ const ConfirmedEventsScreen = ({ route }) => {
             fontWeight: 'bold',
             textAlign: 'center',
         },
+        cancelButton: {
+            borderRadius: 14,
+            marginBottom: 15,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            width: 90,
+            alignItems: 'center',
+        },
+        cancelText: {
+            fontSize: 14,
+            fontWeight: 'bold',
+            letterSpacing: 0.25,
+
+        },
+        buttonContainer: {
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            marginTop: -35,
+            marginBottom: -10,
+        },
+
     });
+
+    const handleCancelEvent = async (eventId) => {
+        if (onDeleteEvent) {
+            try {
+                await onDeleteEvent(eventId);
+                console.log('Event deleted successfully!');
+                if (getConfirmedEvents) {
+                    getConfirmedEvents();
+                }
+            } catch (error) {
+                console.error('Error deleting event:', error);
+            }
+        }
+    };
+
+
+    const formatEventTime = (startTimeString, endTimeString) => {
+        console.log("Start time:", startTimeString);
+        console.log("End time:", endTimeString);
+        const formatString = 'mm:ss a';
+
+        const startTime = moment(startTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+        const endTime = moment(endTimeString.replace(/T\d{2}:/, 'T00:'), 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(formatString);
+
+        return `${startTime} - ${endTime}`;
+    };
+
 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
-                <View style={styles.contentContainer}>
-                    {route.confirmedEvents.map(event => {
-                        return (
-                            <View style={styles.outerContainer}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+                    <View style={styles.contentContainer}>
+                        {route.confirmedEvents.map(event => (
+                            <View style={styles.outerContainer} key={event._id}>
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.subText}>{event.title}</Text>
                                     <View style={styles.container}>
@@ -122,7 +155,9 @@ const ConfirmedEventsScreen = ({ route }) => {
                                 </View>
                                 <View style={styles.detailsContainer}>
                                     <Text style={styles.detailsLabel}>Time</Text>
-                                    <Text style={styles.detailsText}>{event.time}</Text>
+                                    <Text style={styles.detailsText}>
+                                        {formatEventTime(event.start, event.end)}
+                                    </Text>
                                 </View>
                                 <View style={styles.detailsContainer}>
                                     <View style={styles.detailsLabel}>
@@ -133,26 +168,34 @@ const ConfirmedEventsScreen = ({ route }) => {
                                     </Text>
                                 </View>
                                 <View style={[styles.detailsContainer, { margin: 0 }]}>
-                                    {event.confirmedUsers.slice(0, 4).map((initials) => {
-                                        return (
-                                            <View style={styles.iconContainer}>
-                                                <Text style={styles.iconText}>{initials}</Text>
-                                            </View>
-                                        )
-                                    })}
+                                    {event.confirmedUsers.slice(0, 4).map((user) => (
+                                        <View style={styles.iconContainer} key={user.id}>
+                                            <Text style={styles.iconText}>{user.initials}</Text>
+                                        </View>
+                                    ))}
                                     {event.confirmedUsers.length > 4 && (
                                         <View style={styles.iconContainer}>
                                             <Text style={styles.iconText}>+{event.confirmedUsers.length - 4}</Text>
                                         </View>
                                     )}
                                 </View>
+                                <View style={styles.buttonContainer}>
+                                    <Pressable
+                                        style={[styles.cancelButton, { backgroundColor: '#FAE0E0' }]}
+                                        onPress={() => handleCancelEvent(event._id)}
+                                    >
+                                        <Text style={{ ...styles.cancelText, color: '#FF7880' }}>Cancel</Text>
+                                    </Pressable>
+                                </View>
                             </View>
-                        )
-                    })}
-                </View>
+                        ))}
+                    </View>
+                </ScrollView>
             </ImageBackground>
         </View>
     );
 };
+
+
 
 export default ConfirmedEventsScreen;

@@ -8,10 +8,12 @@ import UpcomingEventsScreen from './screens/UpcomingEvents';
 import HomeScreen from './screens/HomeScreen';
 import NewGroup from './screens/NewGroup';
 import axios from 'axios'
+import PendingEventScreen from './screens/PendingEvent';
 import CreateEvent from './screens/CreateEvent';
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
-const IP_ADDRESS = '128.59.177.7'; // change this to your IP ADDRESS to connect with the server
+
+const IP_ADDRESS = '10.207.85.215'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
 
@@ -20,44 +22,58 @@ const App = () => {
     const [groups, setGroups] = useState([])
     const [pendingEvents, setPendingEvents] = useState([])
     const [confirmedEvents, setConfirmedEvents] = useState([])
+    //const [handleDeleteEvent] = useState([])
+
+    const handleDeleteEvent = async (eventId) => {
+        try {
+            const serverUrl = `http://${IP_ADDRESS}:3000`;
+            await axios.delete(`${serverUrl}/event/${eventId}`);
+        } catch (error) {
+            console.error('Error deleting event:', error);
+        }
+    };
+
+    const getConfirmedEvents = async () => {
+        try {
+            const confirmedEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/confirmed`)
+            console.log('confirmed events data: ', confirmedEvents.data)
+            setConfirmedEvents(confirmedEvents.data)
+        } catch (error) {
+            console.log('errors: ', error)
+        }
+    }
+
+    const getAllUsers = async () => {
+        try {
+            const users = await axios.get(`http://${IP_ADDRESS}:3000/users`)
+            console.log('users data: ', users.data)
+            setUsers(users.data)
+        } catch (error) {
+            console.log('errors: ', error)
+        }
+    }
+
+    const getAllGroups = async () => {
+        try {
+            const groups = await axios.get(`http://${IP_ADDRESS}:3000/groups`)
+            console.log('groups data: ', groups.data)
+            setGroups(groups.data)
+        } catch (error) {
+            console.log('errors: ', error)
+        }
+    }
+
+    const getPendingEvents = async () => {
+        try {
+            const pendingEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/pending`)
+            console.log('pending events data: ', pendingEvents.data)
+            setPendingEvents(pendingEvents.data)
+        } catch (error) {
+            console.log('errors: ', error)
+        }
+    }
 
     useEffect(() => {
-        async function getAllUsers() {
-            try {
-                const users = await axios.get(`http://${IP_ADDRESS}:3000/users`)
-                console.log('users data: ', users.data)
-                setUsers(users.data)
-            } catch (error) {
-                console.log('errors: ', error)
-            }
-        }
-        async function getAllGroups() {
-            try {
-                const groups = await axios.get(`http://${IP_ADDRESS}:3000/groups`)
-                console.log('groups data: ', groups.data)
-                setGroups(groups.data)
-            } catch (error) {
-                console.log('errors: ', error)
-            }
-        }
-        async function getPendingEvents() {
-            try {
-                const pendingEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/pending`)
-                console.log('pending events data: ', pendingEvents.data)
-                setPendingEvents(pendingEvents.data)
-            } catch (error) {
-                console.log('errors: ', error)
-            }
-        }
-        async function getConfirmedEvents() {
-            try {
-                const confirmedEvents = await axios.get(`http://${IP_ADDRESS}:3000/events/confirmed`)
-                console.log('confirmed events data: ', confirmedEvents.data)
-                setConfirmedEvents(confirmedEvents.data)
-            } catch (error) {
-                console.log('errors: ', error)
-            }
-        }
         getAllUsers()
         getAllGroups()
         getPendingEvents()
@@ -118,9 +134,12 @@ const App = () => {
                         users={users}
                         pendingEvents={pendingEvents}
                         confirmedEvents={confirmedEvents}
+                        onDeleteEvent={handleDeleteEvent}
+                        getConfirmedEvents={getConfirmedEvents}
                     />}
                 />
                 <Tab.Screen name="Profile" component={HomeScreen} />
+
             </Tab.Navigator>
         </NavigationContainer>
     );
