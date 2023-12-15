@@ -1,10 +1,11 @@
 import { React, useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, Modal} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import image from '../assets/background.png';
 import { useNavigation } from '@react-navigation/native';
 import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-google-fonts/public-sans";
 import UserIcon from '../components/UserIcon';
+import CreateButtonSmall from '../components/CreateButtonSmall';
 
 const PendingEvent = (props) => {
     const [home, setHome] = useState(false)
@@ -97,17 +98,12 @@ const PendingEvent = (props) => {
     });
 
     return (
+    <Modal transparent={true} visible={props.isVisible}>
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <View style={styles.outerContainer}>
                     <View style={styles.innerContainer}>
                         <Text style={styles.headerText}>{event.title}</Text>
-                        <Pressable
-                            style={styles.iconContainer}
-                            onPress={() => navigation.goBack()}
-                        >
-                            <Ionicons name='close-circle-outline' size={28} color='#FAE0E0' />
-                        </Pressable>
                     </View>
                     <View
                         style={{
@@ -123,7 +119,7 @@ const PendingEvent = (props) => {
                         <Text style={styles.subText}>Contributors</Text>
                         <View style={{ flexDirection: 'row' }}>
                             {event.confirmedUsers.map((user, index) => (
-                                <UserIcon key={index} initials={user.initials} />
+                                <UserIcon initials={user.initials}/>
                             ))}
                         </View>
                     </View>
@@ -144,28 +140,15 @@ const PendingEvent = (props) => {
                         <Text style={styles.detailsText}>{event.location}</Text>
                     </View>
                     <View style={styles.innerContainer}>
-                        <Pressable
-                            style={[styles.confirmButton, { backgroundColor: '#FF7880' }]}
-                            onPress={() => {
-                                props.confirmEvent(event._id)
-                                setHome(true)
-                            }}
-                        >
-                            <Text style={{ ...styles.confirmText, color: '#ffffff' }}>Confirm</Text>
-                        </Pressable>
-                        <Pressable
-                            style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]}
-                            onPress={() => {
-                                props.onDeleteEvent(event._id)
-                                setHome(true)
-                            }}
-                        >
-                            <Text style={{ ...styles.confirmText, color: '#FF7880' }}>Decline</Text>
-                        </Pressable>
+                    <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <CreateButtonSmall buttonText="Decline" onPress={props.onDeleteEvent}/>
+                        <CreateButtonSmall buttonText="Accept" onPress={props.onConfirmEvent}/>
+                    </View>
                     </View>
                 </View>
             </ImageBackground>
         </View>
+    </Modal>
     );
 };
 
