@@ -169,6 +169,12 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
                 <VotingPoll isVisible={isVotingVisible} onClose={onVotingClose} />
+                <PendingEvent
+                    event={currEvent}
+                    onDeleteEvent={onInviteDecline}
+                    onConfirmEvent={onInviteConfirm}
+                    isVisible={isInviteVisible}
+                />
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     <View style={styles.contentContainer}>
                         {route.pendingEvents.map(event => {
