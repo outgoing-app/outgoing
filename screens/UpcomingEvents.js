@@ -88,6 +88,7 @@ const UpcomingEventsScreen = (props) => {
                             route={{ pendingEvents: props.pendingEvents }}
                             onDeleteEvent={props.onDeleteEvent}
                             confirmEvent={props.confirmEvent}
+                            userId={props.userId}
                         />,
                         confirmed: () => <ConfirmedEventsScreen
                             route={{ confirmedEvents: props.confirmedEvents }}
