@@ -120,6 +120,22 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
     });
 
     const handleSingleEvent = (event) => {
+        setEventId(event._id);
+        setCurrEvent(event);
+        if (event.pendingUsers.includes('You')) {
+            if (event.status == 'Tentatively') {
+                setEventType('red');
+                setIsVotingVisible(true);
+            } else {
+                setIsInviteVisible(true);
+            }
+        } else {
+            setEventType('yellow');
+        }
+    }
+
+    /*
+    const handleSingleEvent = (event) => {
         setShowSingleEvent(!showSingleEvent);
         setEventId(event._id);
         if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
@@ -152,7 +168,8 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
                 </ImageBackground>
             </View>
         )
-    }
+    } */
+
     const formatEventTime = (startTimeString, endTimeString) => {
         console.log("Start time:", startTimeString);
         console.log("End time:", endTimeString);
