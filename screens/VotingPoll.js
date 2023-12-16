@@ -40,7 +40,6 @@ const VotingPoll = ({ isVisible, onClose, event }) => {
             index === idx ? !item : item
         );
         setCheckedState(updatedCheckedState)
-        setButtonColor('grey')
     };
 
     const vote = () => {

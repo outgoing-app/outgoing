@@ -1,6 +1,6 @@
 // react native
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, ImageBackground, Pressable, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Pressable, TextInput, ScrollView, KeyboardAvoidingView, TouchableOpacity} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import image from '../assets/background.png'
 import { useNavigation } from '@react-navigation/native'
@@ -14,7 +14,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 const CreateEvent = (props) => {
   console.log(props.groups)
-
+  const navigation = useNavigation();
   const [selectedGroups, setSelectedGroups] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const groupOptions = props.groups.map(item => {
@@ -26,7 +26,10 @@ const CreateEvent = (props) => {
   let allOptions = userOptions.concat(groupOptions)
 
   const [selectedIndex, setIndex] = React.useState(0);
-  const handleCreateEvent = console.log("created");
+  const handleCreateEvent = () => {
+    console.log("created");
+    navigation.goBack();
+  }
 
   const[name, setName] = useState('');
   const[startTime, setStartTime] = useState('');
@@ -98,6 +101,21 @@ const CreateEvent = (props) => {
         scrollContainer: {
           alignItems: 'center',
         },
+        createButton: {
+          width: 282,
+          height: 50,
+          backgroundColor: '#FC6E77',
+          borderRadius: 12,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 20,
+          },
+          createButtonText: {
+              fontFamily: 'Public Sans',
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: 'white',
+          },
     });
 
     return (
@@ -119,7 +137,7 @@ const CreateEvent = (props) => {
                         style={{
                           borderBottomColor: '#FC6E77',
                           borderBottomWidth: 2,
-                          width: 350,
+                          width: 400,
                           alignSelf: 'center',
                           marginTop: 15,
                           marginBottom: 10,
@@ -277,7 +295,12 @@ const CreateEvent = (props) => {
                             </View> 
                           </View>
                         </View>
-                        <CreateButton buttonText="Create Event" onPress={handleCreateEvent} />
+                        <TouchableOpacity
+                            onPress={handleCreateEvent}
+                            style={styles.createButton}
+                        >
+                            <Text style={styles.createButtonText}>Create Event</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                   </View>
             </ImageBackground>
