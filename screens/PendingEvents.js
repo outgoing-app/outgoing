@@ -12,6 +12,7 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
     const [eventType, setEventType] = useState(null)
+    const [currEvent, setCurrEvent] = useState({})
 
     const [isVotingVisible, setIsVotingVisible] = useState(false);
     const onVotingClose = () => {
