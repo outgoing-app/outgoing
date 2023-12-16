@@ -171,11 +171,11 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent, userId }) => 
     return (
         <View style={styles.container}>
             <ImageBackground source={image} style={styles.image}>
-                <VotingPoll
+                {currEvent != null && <VotingPoll
                     event={currEvent}
                     isVisible={isVotingVisible}
                     onClose={onVotingClose}
-                />
+                />}
                 {currEvent != null && <PendingEvent
                     event={currEvent}
                     onDeleteEvent={onInviteDecline}

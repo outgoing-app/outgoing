@@ -21,7 +21,7 @@ const times = [
 ];
 
 
-const VotingPoll = ({ isVisible, onClose }) => {
+const VotingPoll = ({ isVisible, onClose, event }) => {
     const navigation = useNavigation();
     const [fontsLoaded] = useFonts({
         PublicSans_700Bold,
@@ -116,7 +116,7 @@ const VotingPoll = ({ isVisible, onClose }) => {
     return (
         <Modal transparent={true} visible={isVisible}>
             <View style={styles.outerContainer}>
-                <Text style={styles.headerText}>{eventName}</Text>
+                <Text style={styles.headerText}>{event.title}</Text>
                 <View
                     style={{
                         borderBottomColor: '#FC6E77',
@@ -130,13 +130,13 @@ const VotingPoll = ({ isVisible, onClose }) => {
                 <View style={styles.innerContainer}>
                     <Text style={styles.subText}>Waiting on</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        {waitingInitials.map((name) => <UserIcon initials={name} size={35} />)}
+                        {event.pendingUsers.map((user) => <UserIcon initials={user.initials} size={35} />)}
                     </View>
                 </View>
                 <View style={styles.innerContainer}>
                     <Text style={styles.subText}>Confirmed</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        {confirmedInitials.map((name) => <UserIcon initials={name} size={35} />)}
+                        {event.confirmedUsers.map((user) => <UserIcon initials={user.initials} size={35} />)}
                     </View>
                 </View>
                 <View style={styles.pollContainer}>
