@@ -110,7 +110,10 @@ const deleteEvent = async (id) => {
 const confirmEvent = async (id) => {
     try {
         const filter = { _id: new ObjectId(id) }
-        const update = { pending: false }
+        const update = {
+            pending: false,
+            status: 'Scheduled'
+        }
         const confirmedEvent = await Event.findOneAndUpdate(
             filter,
             update,
