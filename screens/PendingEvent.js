@@ -12,6 +12,7 @@ const PendingEvent = (props) => {
     const navigation = useNavigation();
     //const event = route.params.event; // Extracting event from route params
     const event = props.event
+    console.log(event)
 
     // Function to format event time
     const formatEventTime = (timeString) => {

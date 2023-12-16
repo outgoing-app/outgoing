@@ -8,18 +8,35 @@ import VotingPoll from './VotingPoll';
 import { useNavigation } from '@react-navigation/native';
 import moment from "moment/moment";
 
-const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
+const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent, userId }) => {
     const [showSingleEvent, setShowSingleEvent] = useState(false);
     const [eventId, setEventId] = useState(null);
+    const [currEvent, setCurrEvent] = useState(null);
     const [eventType, setEventType] = useState(null)
-    const [currEvent, setCurrEvent] = useState({})
+    const [currentEvent, setCurrentEvent] = useState({})
 
     const [isVotingVisible, setIsVotingVisible] = useState(false);
+    const [isInviteVisible, setIsInviteVisible] = useState(false);
+
     const onVotingClose = () => {
         setIsVotingVisible(false)
-        console.log("hi")
+        console.log('closing voting poll visibility')
     };
-    const navigation = useNavigation();
+
+    const onInviteDecline = () => {
+        onDeleteEvent(eventId)
+        setIsInviteVisible(false)
+        console.log("hello")
+    }
+
+    const onInviteConfirm = () => {
+        confirmEvent(eventId)
+        setIsInviteVisible(false)
+        console.log("hey")
+    }
+
+    //const navigation = useNavigation();
+
     useEffect(() => {
         setShowSingleEvent(false)
         setEventId(null)
@@ -123,53 +140,21 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
     const handleSingleEvent = (event) => {
         setEventId(event._id);
         setCurrEvent(event);
-        if (event.pendingUsers.includes('You')) {
-            if (event.status == 'Tentatively') {
+        const pendingUserIds = event.pendingUsers.map(user => user.userId)
+        console.log('event: ', event)
+        if (pendingUserIds.includes(userId) && event.colorCode != 'green') {
+            if (event.status == 'Tentatively' && event.colorCode == 'red') {
+                console.log('setting is voting visible true')
                 setEventType('red');
                 setIsVotingVisible(true);
             } else {
+                console.log('setting invite visible true')
                 setIsInviteVisible(true);
             }
         } else {
             setEventType('yellow');
         }
     }
-
-    /*
-    const handleSingleEvent = (event) => {
-        setShowSingleEvent(!showSingleEvent);
-        setEventId(event._id);
-        if (event.status === 'Tentatively' && (event.pendingUsers.length > 1 || !event.pendingUsers.includes('You'))) {
-            setEventType('red');
-            setIsVotingVisible(true)
-        } else if (event.status !== 'Tentatively') {
-            setEventType('green');
-        } else {
-            setEventType('yellow');
-        }
-        //navigation.navigate('PendingEvent', { event });
-    };
-
-
-
-    if (showSingleEvent) {
-        const events = route.pendingEvents.filter(item => {
-            if (item._id == eventId) {
-                return item
-            }
-        })
-        return (
-            <View style={styles.container}>
-                <ImageBackground source={image} style={styles.image}>
-                    <PendingEvent
-                        event={events[0]}
-                        onDeleteEvent={onDeleteEvent}
-                        confirmEvent={confirmEvent}
-                    />
-                </ImageBackground>
-            </View>
-        )
-    } */
 
     const formatEventTime = (startTimeString, endTimeString) => {
         console.log("Start time:", startTimeString);
@@ -191,12 +176,12 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
                     isVisible={isVotingVisible}
                     onClose={onVotingClose}
                 />
-                <PendingEvent
+                {currEvent != null && <PendingEvent
                     event={currEvent}
                     onDeleteEvent={onInviteDecline}
                     onConfirmEvent={onInviteConfirm}
                     isVisible={isInviteVisible}
-                />
+                />}
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     <View style={styles.contentContainer}>
                         {route.pendingEvents.map(event => {
@@ -263,8 +248,8 @@ const PendingEventsScreen = ({ route, onDeleteEvent, confirmEvent }) => {
                         })}
                     </View>
                 </ScrollView>
-            </ImageBackground>
-        </View>
+            </ImageBackground >
+        </View >
     );
 };
 
