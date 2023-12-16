@@ -145,15 +145,13 @@ const PendingEvent = (props) => {
                     <View style={styles.innerContainer}>
                         <Pressable
                             style={[styles.confirmButton, { backgroundColor: '#FF7880' }]}
-                            onPress={() => {
-                                // Handle confirmation logic
-                            }}
+                            onPress={() => props.confirmEvent(event._id)}
                         >
                             <Text style={{ ...styles.confirmText, color: '#ffffff' }}>Confirm</Text>
                         </Pressable>
                         <Pressable
                             style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]}
-                            onPress={() => handleCancelEvent(event._id)}
+                            onPress={() => props.onDeleteEvent(event._id)}
                         >
                             <Text style={{ ...styles.confirmText, color: '#FF7880' }}>Decline</Text>
                         </Pressable>
