@@ -10,12 +10,15 @@ import NewGroup from './screens/NewGroup';
 import axios from 'axios'
 import PendingEventScreen from './screens/PendingEvent';
 import CreateEvent from './screens/CreateEvent';
+import { LogBox } from "react-native"
 
 const CURRENT_USER_ID = 1;  // "logged in" user; please do not change this id
 
 const IP_ADDRESS = '10.206.27.172'; // change this to your IP ADDRESS to connect with the server
 
 const Tab = createBottomTabNavigator();
+
+LogBox.ignoreAllLogs(true)
 
 const App = () => {
     const [users, setUsers] = useState([])
