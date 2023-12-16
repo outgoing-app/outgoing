@@ -304,5 +304,197 @@
                 "initials": "LY"
             }
         ]
+    },
+    {
+        "organizerId": 3,
+        "pending": true,
+        "status": "Tentatively",
+        "colorCode": "yellow",
+        "title": "Musical",
+        "start": "2023-11-25T00:20:00.5640Z",
+        "end": "2023-11-25T00:21:30.5640Z",
+        "location": "Sunset Cruise",
+        "confirmedUsers": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            }
+        ],
+        "pendingUsers": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ],
+        "pollingOptions": [
+            {
+                "start": "2023-11-25T00:20:00.5640Z",
+                "end": "2023-11-25T00:21:30.5640Z",
+                "count": 2
+            },
+            {
+                "start": "2023-11-15T00:20:30.5640Z",
+                "end": "2023-11-15T00:22:00.5640Z",
+                "count": 0
+            }
+        ],
+        "contributors": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            },
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ]
+    },
+    {
+        "organizerId": 3,
+        "pending": true,
+        "status": "Tentatively",
+        "colorCode": "yellow",
+        "title": "Kayaking",
+        "start": "2023-11-25T00:20:00.5640Z",
+        "end": "2023-11-25T00:21:30.5640Z",
+        "location": "Sunset Cruise",
+        "confirmedUsers": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            }
+        ],
+        "pendingUsers": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ],
+        "pollingOptions": [
+            {
+                "start": "2023-11-25T00:20:00.5640Z",
+                "end": "2023-11-25T00:21:30.5640Z",
+                "count": 2
+            },
+            {
+                "start": "2023-11-15T00:20:30.5640Z",
+                "end": "2023-11-15T00:22:00.5640Z",
+                "count": 0
+            }
+        ],
+        "contributors": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            },
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ]
+    },
+    {
+        "organizerId": 3,
+        "pending": true,
+        "status": "Tentatively",
+        "colorCode": "yellow",
+        "title": "Central Park Picnic",
+        "start": "2023-11-25T00:20:00.5640Z",
+        "end": "2023-11-25T00:21:30.5640Z",
+        "location": "Sunset Cruise",
+        "confirmedUsers": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            }
+        ],
+        "pendingUsers": [
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ],
+        "pollingOptions": [
+            {
+                "start": "2023-11-25T00:20:00.5640Z",
+                "end": "2023-11-25T00:21:30.5640Z",
+                "count": 2
+            },
+            {
+                "start": "2023-11-15T00:20:30.5640Z",
+                "end": "2023-11-15T00:22:00.5640Z",
+                "count": 0
+            }
+        ],
+        "contributors": [
+            {
+                "userId": 3,
+                "firstname": "Rissa",
+                "lastname": "Chua",
+                "initials": "RC"
+            },
+            {
+                "userId": 4,
+                "firstname": "Tattie",
+                "lastname": "Chitrakorn",
+                "initials": "TC"
+            },
+            {
+                "userId": 1,
+                "firstname": "Maya",
+                "lastname": "Sundar",
+                "initials": "MS"
+            }
+        ]
     }
 ]
