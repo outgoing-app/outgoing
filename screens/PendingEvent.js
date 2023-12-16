@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import image from '../assets/background.png';
@@ -7,7 +7,6 @@ import { PublicSans_700Bold, PublicSans_400Regular, useFonts } from "@expo-googl
 import UserIcon from '../components/UserIcon';
 
 const PendingEvent = (props) => {
-    const [home, setHome] = useState(false)
     const navigation = useNavigation();
     //const event = route.params.event; // Extracting event from route params
     const event = props.event
@@ -146,19 +145,13 @@ const PendingEvent = (props) => {
                     <View style={styles.innerContainer}>
                         <Pressable
                             style={[styles.confirmButton, { backgroundColor: '#FF7880' }]}
-                            onPress={() => {
-                                props.confirmEvent(event._id)
-                                setHome(true)
-                            }}
+                            onPress={() => props.confirmEvent(event._id)}
                         >
                             <Text style={{ ...styles.confirmText, color: '#ffffff' }}>Confirm</Text>
                         </Pressable>
                         <Pressable
                             style={[styles.confirmButton, { backgroundColor: '#FAE0E0' }]}
-                            onPress={() => {
-                                props.onDeleteEvent(event._id)
-                                setHome(true)
-                            }}
+                            onPress={() => props.onDeleteEvent(event._id)}
                         >
                             <Text style={{ ...styles.confirmText, color: '#FF7880' }}>Decline</Text>
                         </Pressable>
